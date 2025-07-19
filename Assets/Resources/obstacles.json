@@ -1,0 +1,418 @@
+[
+  {
+    "distance": 100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 180,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 100,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 1100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 1300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 1500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 1700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 1900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 2100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 2300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 2500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 2700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 2900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 3100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 3300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 3500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 3700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 3900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 4100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 4300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 4500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 4700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 4900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 5100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 5300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 5500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 5700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 5900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 6100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 6300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 6500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 6700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 6900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 7100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 7300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 7500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 7700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 7900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 8100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 8300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 8500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 8700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 8900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  },
+  {
+    "distance": 9100,
+    "y": 0,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -2
+    }
+  },
+  {
+    "distance": 9300,
+    "y": -1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -5
+    }
+  },
+  {
+    "distance": 9500,
+    "y": 2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -4
+    }
+  },
+  {
+    "distance": 9700,
+    "y": -2,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -1
+    }
+  },
+  {
+    "distance": 9900,
+    "y": 1,
+    "prefab": "Robot",
+    "data": {
+      "baseSpeed": -3
+    }
+  }
+]
