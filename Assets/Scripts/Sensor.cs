@@ -15,7 +15,7 @@ public class OponentSensor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Obstacle") && oponent != null)
+        if ((other.CompareTag("Obstacle") || other.CompareTag("Player")) && oponent != null)
         {
             float direction = other.transform.position.y > transform.position.y ? -1f : 1f;
             oponent.OnSensorTrigger(direction);
