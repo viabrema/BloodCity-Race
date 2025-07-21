@@ -67,7 +67,8 @@ public class Oponent : MonoBehaviour
         Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
         currentMaxSpeed = maxSpeed;
 
-        if (viewportPos.x > 1f)
+        // Ajusta a velocidade máxima com base na posição do oponente na tela
+        if (viewportPos.x > 0.7f)
             currentMaxSpeed *= 0.9f;
         else if (viewportPos.x < 0f)
             currentMaxSpeed *= 1.1f;

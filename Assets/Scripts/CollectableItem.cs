@@ -55,7 +55,8 @@ public class CollectibleItem : MonoBehaviour
     {
         if (collectEffectPrefab != null)
         {
-            Vector3 effectPosition = new Vector3(transform.position.x, transform.position.y, 1f);
+            Vector3 effectPosition = new Vector3(transform.position.x - 0.7f, transform.position.y, 2.5f);
+            effectPosition.z = transform.position.z + 0.1f; // Ajusta a profundidade para não ficar atrás do item
             Instantiate(collectEffectPrefab, effectPosition, Quaternion.identity);
         }
     }
