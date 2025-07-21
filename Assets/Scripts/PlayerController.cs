@@ -1,16 +1,68 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     private bool isNitroActive = false;
     private float verticalVelocity = 0f;
+    private AudioSource accelerationSound;
 
+    void Start()
+    {
+        accelerationSound = GetComponent<AudioSource>();
+        accelerationSound.loop = true;
+        accelerationSound.Play(); // Garante que o som comece tocando
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Item"))
+        {
+            CollectibleItem item = other.GetComponent<CollectibleItem>();
+            if (item != null)
+            {
+                string collectedType = item.type;
+                Debug.Log("Item coletado do tipo: " + collectedType);
+
+                RaceManager.Instance.collectedItem = collectedType;
+            }
+        }
+    }
 
     void Update()
     {
         HandleInput();
         RaceManager.Instance.distanceTraveled += RaceManager.Instance.currentSpeed * Time.deltaTime;
+
+        // Ajuste de volume e pitch do som de aceleração
+        float speedPercent = RaceManager.Instance.currentSpeed / RaceManager.Instance.maxSpeed;
+        speedPercent = Mathf.Clamp01(speedPercent);
+        // accelerationSound.volume = 0.5f + (speedPercent * 0.5f);
+        accelerationSound.pitch = 0.5f + speedPercent * 5f;
+
+        // Inclinação visual do carro ao subir ou descer
+        float tiltAngle = verticalVelocity * 5f; // valor reduzido para suavidade
+        Quaternion targetRotation = Quaternion.Euler(0, 0, tiltAngle);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+
+        // --- Se corrida ainda não começou, trava a velocidade ---
+        if (!RaceManager.Instance.startedRace)
+        {
+            RaceManager.Instance.currentSpeed = 0f;
+        }
+
+        // ========== CONTROLE DE INÍCIO E REINÍCIO ==========
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            RaceManager.Instance.startedRace = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            RaceManager.Instance.ResetRace();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     void HandleInput()
@@ -24,7 +76,7 @@ public class PlayerController : MonoBehaviour
 
         float targetVelocity = vInput * RaceManager.Instance.verticalSpeed;
         verticalVelocity = Mathf.Lerp(verticalVelocity, targetVelocity, Time.deltaTime * 5f);
-        transform.Translate(Vector2.up * verticalVelocity * Time.deltaTime);
+        transform.Translate(Vector2.up * verticalVelocity * Time.deltaTime, Space.World);
 
         // ========== ACELERAÇÃO COM LIMITE DINÂMICO ==========
         if (Input.GetKey(KeyCode.RightArrow))
@@ -52,11 +104,30 @@ public class PlayerController : MonoBehaviour
         // Clamp inferior
         RaceManager.Instance.currentSpeed = Mathf.Max(RaceManager.Instance.currentSpeed, 0);
 
-        // ========== NITRO ==========
+        // ========== EXECUTA O ITEM ==========
         if (Input.GetKeyDown(KeyCode.Space) && !isNitroActive)
         {
-            StartCoroutine(ActivateNitro());
+            // StartCoroutine(ActivateNitro());
+            if (RaceManager.Instance.collectedItem == "nitro")
+            {
+                StartCoroutine(ActivateNitro());
+                RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
+            }
+            else if (RaceManager.Instance.collectedItem == "shot")
+            {
+                // Implementar lógica de tiro
+                Debug.Log("Disparando tiro!");
+                RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
+            }
+            else if (RaceManager.Instance.collectedItem == "shield")
+            {
+                // Implementar lógica de escudo
+                Debug.Log("Escudo ativado!");
+                RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
+            }
         }
+
+
 
         // ========== RETORNO SUAVE PÓS-NITRO ==========
         if (!isNitroActive && RaceManager.Instance.currentSpeed > RaceManager.Instance.maxSpeed)

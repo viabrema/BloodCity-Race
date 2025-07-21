@@ -48,9 +48,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3946f8a8ab04644459e7e11f1d8654c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isStatic: 0
   baseSpeed: -5
   hitPenalty: 10
   sparkEffectPrefab: {fileID: 423829620893889634, guid: 8901fd0814c68ff419fcf2da6c735dad, type: 3}
+  audioSource: {fileID: -4734385559335870610}
+  oponentSlowDownFactor: 0.8
 --- !u!50 &7312247307068430011
 Rigidbody2D:
   serializedVersion: 4
@@ -135,7 +138,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0a9ce5b4fc7010348ab67143b3c44bc7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0

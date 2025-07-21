@@ -14,7 +14,10 @@ public class RaceManager : MonoBehaviour
     public float deceleration = 10f;
     public float nitroBoost = 20f;
     public float nitroDuration = 1f;
-    public float totalRaceDistance = 10000f;
+    public float totalRaceDistance = 5000f;
+    public string collectedItem = ""; // Guarda o tipo de item coletado (ex: "Nitro", "Shot", etc.)
+
+    public bool startedRace = false;
 
     [Header("Upgrades")]
     public float verticalSpeed = 5f;
@@ -22,10 +25,10 @@ public class RaceManager : MonoBehaviour
     public int nitroLevel = 1;
 
     [Header("Oponentes")]
-    [HideInInspector] public Oponent[] oponents;
+    public Oponent[] oponents;
 
 
-    [HideInInspector] // impede o Unity de tentar desenhar isso no Inspector (evita StackOverflow)
+    // [HideInInspector] // impede o Unity de tentar desenhar isso no Inspector (evita StackOverflow)
     public float[] distancesTraveledOponents;
 
     void Awake()
@@ -51,6 +54,27 @@ public class RaceManager : MonoBehaviour
         for (int i = 0; i < oponents.Length; i++)
         {
             oponents[i].indexInRaceManager = i;
+        }
+    }
+
+    public void ResetRace()
+    {
+        distanceTraveled = 0f;
+
+        for (int i = 0; i < distancesTraveledOponents.Length; i++)
+        {
+            distancesTraveledOponents[i] = 0f;
+        }
+
+        // Reseta a velocidade e outros parâmetros
+        startedRace = false;
+        currentSpeed = 0f;
+
+        // Destroi todos os obstáculos
+        var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach (var obj in obstacles)
+        {
+            Destroy(obj);
         }
     }
 }

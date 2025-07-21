@@ -4,11 +4,13 @@ public class Oponent : MonoBehaviour
 {
     public int indexInRaceManager = 0;
 
+    [Header("Velocidade")]
     public float maxSpeed = 52f;
     public float acceleration = 10f;
     public float deceleration = 10f;
     public float slowDownFactor = 0.8f;
 
+    [Header("Evitar Obstáculos")]
     public float avoidSpeed = 3f;
     public float avoidDuration = 0.5f;
     public float verticalInertia = 6f;
@@ -18,74 +20,110 @@ public class Oponent : MonoBehaviour
     public float returnSpeed = 2f;
     public float centerY = 0f;
 
+    [HideInInspector] public float currentSpeed = 0f;
+
     private float currentMaxSpeed;
-    private bool avoidingObstacle = false;
     private float avoidTimer = 0f;
     private float verticalDirection = 0f;
     private float currentVerticalVelocity = 0f;
     private float timeSinceLastObstacle = 0f;
 
-    public float currentSpeed = 0f;
+    private bool avoidingObstacle = false;
     private bool isSlowingDown = false;
+
+    // Colisão com parede
+    private bool touchingWall = false;
+
+    // Colisão com obstáculo
+    private bool isTouchingObstacle = false;
+    private float obstacleAvoidDirection = 0f;
+    private Collider2D currentObstacle = null;
+    private float currentObstacleSlowFactor = 1f;
 
     void Start()
     {
-        currentMaxSpeed = maxSpeed;
+        currentMaxSpeed = 0f;
     }
 
     void Update()
     {
         if (RaceManager.Instance == null) return;
 
-        // Ajustar currentMaxSpeed baseado na posição em relação à tela
-        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
-        if (viewportPos.x > 1f)
+        if (!RaceManager.Instance.startedRace)
         {
-            currentMaxSpeed = maxSpeed * 0.9f; // na frente e fora da tela → reduz
-        }
-        else if (viewportPos.x < 0f)
-        {
-            currentMaxSpeed = maxSpeed * 1.1f; // atrás e fora da tela → acelera
-        }
-        else
-        {
-            currentMaxSpeed = maxSpeed;
+            currentSpeed = 0f;
+            return;
         }
 
-        // Atualizar velocidade com aceleração/desaceleração
+        HandleHorizontalSpeed();
+        UpdateRaceDistance();
+        MoveHorizontal();
+        MoveVertical();
+        ApplyTilt();
+    }
+
+    private void HandleHorizontalSpeed()
+    {
+        Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+        currentMaxSpeed = maxSpeed;
+
+        if (viewportPos.x > 1f)
+            currentMaxSpeed *= 0.9f;
+        else if (viewportPos.x < 0f)
+            currentMaxSpeed *= 1.1f;
+
         float targetSpeed = currentMaxSpeed;
 
-        if (isSlowingDown)
+        if (isTouchingObstacle)
+        {
+            targetSpeed *= currentObstacleSlowFactor;
+
+            if (!avoidingObstacle)
+            {
+                avoidingObstacle = true;
+                verticalDirection = obstacleAvoidDirection;
+                avoidTimer = avoidDuration;
+            }
+        }
+        else if (isSlowingDown)
         {
             targetSpeed *= slowDownFactor;
-            currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, deceleration * Time.deltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, currentMaxSpeed, acceleration * Time.deltaTime);
         }
 
-        // Atualizar distância percorrida
+        float speedChange = (targetSpeed < currentSpeed) ? deceleration : acceleration;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, speedChange * Time.deltaTime);
+    }
+
+    private void UpdateRaceDistance()
+    {
         if (indexInRaceManager < RaceManager.Instance.distancesTraveledOponents.Length)
         {
             RaceManager.Instance.distancesTraveledOponents[indexInRaceManager] += currentSpeed * Time.deltaTime;
         }
+    }
 
-        // Movimento horizontal relativo à diferença de velocidade
+    private void MoveHorizontal()
+    {
         float relativeSpeed = RaceManager.Instance.currentSpeed - currentSpeed;
-        transform.Translate(Vector2.left * relativeSpeed * Time.deltaTime);
 
-        // ===== Movimento Vertical =====
+        if (!touchingWall)
+        {
+            transform.Translate(Vector2.left * relativeSpeed * Time.deltaTime);
+        }
+    }
+
+    private void MoveVertical()
+    {
         float targetVertical = 0f;
 
         if (avoidingObstacle)
         {
             targetVertical = verticalDirection * avoidSpeed;
             avoidTimer -= Time.deltaTime;
+
             if (avoidTimer <= 0f)
             {
                 avoidingObstacle = false;
-                timeSinceLastObstacle = 0f;
                 isSlowingDown = false;
             }
         }
@@ -101,9 +139,16 @@ public class Oponent : MonoBehaviour
         }
 
         currentVerticalVelocity = Mathf.Lerp(currentVerticalVelocity, targetVertical, Time.deltaTime * verticalInertia);
-        float newY = transform.position.y + currentVerticalVelocity * Time.deltaTime;
-        newY = Mathf.Clamp(newY, minY, maxY);
+        float newY = Mathf.Clamp(transform.position.y + currentVerticalVelocity * Time.deltaTime, minY, maxY);
         transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+    }
+
+    private void ApplyTilt()
+    {
+        float tiltAmount = currentVerticalVelocity * 1.5f;
+        float maxTilt = 15f;
+        tiltAmount = Mathf.Clamp(tiltAmount, -maxTilt, maxTilt);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, tiltAmount), Time.deltaTime * 5f);
     }
 
     public void OnSensorTrigger(float direction)
@@ -117,5 +162,32 @@ public class Oponent : MonoBehaviour
         }
 
         timeSinceLastObstacle = 0f;
+    }
+
+    public void SetWallCollision(bool isTouching, float suggestedDirection)
+    {
+        touchingWall = isTouching;
+
+        if (isTouching)
+        {
+            OnSensorTrigger(suggestedDirection);
+        }
+    }
+
+    public void SetSlowedByObstacle(bool value, float direction, Collider2D obstacle)
+    {
+        isTouchingObstacle = value;
+        obstacleAvoidDirection = direction;
+        currentObstacle = obstacle;
+
+        if (value && obstacle != null)
+        {
+            Obstacle obsScript = obstacle.GetComponent<Obstacle>();
+            currentObstacleSlowFactor = obsScript != null ? obsScript.oponentSlowDownFactor : 0.5f;
+        }
+        else
+        {
+            currentObstacleSlowFactor = 1f;
+        }
     }
 }

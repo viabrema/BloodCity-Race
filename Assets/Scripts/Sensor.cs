@@ -13,12 +13,29 @@ public class OponentSensor : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if ((other.CompareTag("Obstacle") || other.CompareTag("Player")) && oponent != null)
+        if (oponent == null) return;
+
+        if (other.CompareTag("Obstacle"))
+        {
+            float direction = other.transform.position.y > transform.position.y ? -1f : 1f;
+            oponent.SetSlowedByObstacle(true, direction, other);
+        }
+        else if (other.CompareTag("Player") || other.CompareTag("Oponent"))
         {
             float direction = other.transform.position.y > transform.position.y ? -1f : 1f;
             oponent.OnSensorTrigger(direction);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (oponent == null) return;
+
+        if (other.CompareTag("Obstacle"))
+        {
+            oponent.SetSlowedByObstacle(false, 0f, null);
         }
     }
 }
