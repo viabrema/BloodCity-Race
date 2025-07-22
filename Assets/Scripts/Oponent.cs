@@ -15,7 +15,7 @@ public class Oponent : MonoBehaviour
     public Color pointColor = Color.red;
 
     [Header("Evitar Obstáculos")]
-    public float avoidSpeed = 3f;
+    public float avoidSpeed = 5f;
     public float avoidDuration = 0.5f;
     public float verticalInertia = 6f;
     public float minY = -3.5f;

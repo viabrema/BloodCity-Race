@@ -29,7 +29,7 @@ public class OponentSensor : MonoBehaviour
     {
         if (oponent == null) return;
 
-        if (other.CompareTag("Obstacle"))
+        if (other.CompareTag("Player") || other.CompareTag("Oponent") || other.CompareTag("Obstacle"))
         {
             oponent.SetSlowedByObstacle(false, 0f, null);
         }

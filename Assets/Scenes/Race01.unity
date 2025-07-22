@@ -562,7 +562,7 @@ MonoBehaviour:
   playerTransform: {fileID: 920559146125993656, guid: 9a311c01dae4b864eacbcc063b9b32e5, type: 3}
   distanceTraveled: 0
   currentSpeed: 0
-  maxSpeed: 60
+  maxSpeed: 50
   acceleration: 10
   deceleration: 10
   nitroBoost: 20
