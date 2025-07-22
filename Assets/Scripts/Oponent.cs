@@ -50,6 +50,7 @@ public class Oponent : MonoBehaviour
     {
         if (RaceManager.Instance == null) return;
 
+        MoveVertical();
         if (!RaceManager.Instance.startedRace)
         {
             currentSpeed = 0f;
@@ -59,7 +60,6 @@ public class Oponent : MonoBehaviour
         HandleHorizontalSpeed();
         UpdateRaceDistance();
         MoveHorizontal();
-        MoveVertical();
         ApplyTilt();
     }
 

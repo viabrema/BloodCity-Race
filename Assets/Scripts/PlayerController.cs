@@ -51,11 +51,17 @@ public class PlayerController : MonoBehaviour
         // Efeito de nitro
         if (RaceManager.Instance.currentSpeed > RaceManager.Instance.maxSpeed)
         {
-            nitroEffect.Play();
+            if (!nitroEffect.isPlaying)
+            {
+                nitroEffect.Play();
+            }
         }
         else
         {
-            nitroEffect.Stop();
+            if (nitroEffect.isPlaying)
+            {
+                nitroEffect.Stop();
+            }
         }
 
         // --- Se corrida ainda não começou, trava a velocidade ---
