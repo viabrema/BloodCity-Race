@@ -33,6 +33,7 @@ public class HUDVelocity : MonoBehaviour
         GameObject p = Instantiate(pointerPrefab, pointerContainer);
         p.GetComponent<Image>().color = playerColor;
         playerPointer = p.GetComponent<RectTransform>();
+        playerPointer.SetSiblingIndex(10);
 
         // Cria ponteiros dos oponentes com base na quantidade no RaceManager
         if (RaceManager.Instance != null)

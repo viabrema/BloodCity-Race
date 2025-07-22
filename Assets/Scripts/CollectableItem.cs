@@ -4,7 +4,7 @@ public class CollectibleItem : MonoBehaviour
 {
     [Header("Configurações")]
     public string type = "default"; // Tipo do item, ex: "turbo", "shield", etc.
-    public GameObject collectEffectPrefab; // Prefab de partículas
+    public GameObject collectEffect; // Prefab de partículas
     public GameObject Bag;
 
     private bool destroyed = false;
@@ -53,11 +53,16 @@ public class CollectibleItem : MonoBehaviour
 
     private void TriggerCollectEffect()
     {
-        if (collectEffectPrefab != null)
+        if (collectEffect != null)
         {
-            Vector3 effectPosition = new Vector3(transform.position.x - 0.7f, transform.position.y, 2.5f);
-            effectPosition.z = transform.position.z + 0.1f; // Ajusta a profundidade para não ficar atrás do item
-            Instantiate(collectEffectPrefab, effectPosition, Quaternion.identity);
+
+            ParticleSystem ps = collectEffect.GetComponent<ParticleSystem>();
+            Debug.Log("Efeito de coleta ativado!", ps);
+            if (ps != null)
+            {
+                ps.Play();
+            }
+
         }
     }
 }
