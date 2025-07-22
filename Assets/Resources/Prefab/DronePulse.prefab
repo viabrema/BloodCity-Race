@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4472598733192094925}
   - component: {fileID: 7764044055374455106}
   m_Layer: 0
-  m_Name: DroneNitro
+  m_Name: DronePulse
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04240021255de7a48a885ff4e9a51538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: nitro
+  type: pulse
   collectEffect: {fileID: 8643673104237313343}
   Bag: {fileID: 8454411183613114566}
   destroyed: 0
@@ -379,7 +379,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 710a9e441243e604f914c53062b0425d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a165c14ff1b9f949a7a3603c41abc4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
