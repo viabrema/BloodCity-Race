@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -790.99994, y: -487.40012}
+  m_AnchoredPosition: {x: -672, y: -487}
   m_SizeDelta: {x: 85.35, y: 51.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1407238934981703887
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -243,7 +243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -395.17114, y: -488}
+  m_AnchoredPosition: {x: 684, y: -490}
   m_SizeDelta: {x: 561.0077, y: 51.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4972900914077980023
@@ -308,7 +308,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 2.4512215, y: 0, z: -51.774765, w: 0}
+  m_margin: {x: 2.4512215, y: 0, z: 34.502457, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -489,7 +489,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -897.9, y: -459.2}
+  m_AnchoredPosition: {x: -749, y: -420}
   m_SizeDelta: {x: 110.36, y: 77.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8940893456392983100
@@ -547,8 +547,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 102
-  m_fontSizeBase: 102
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -583,7 +583,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -0.24389648, y: 0, z: -24.22276, w: 0}
+  m_margin: {x: -180.64197, y: 0, z: -24.22276, w: -82.835915}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -781,4 +781,3 @@ MonoBehaviour:
   velocityText: {fileID: 7784143710031711388}
   itemText: {fileID: 9199817699571553056}
   playerColor: {r: 1, g: 1, b: 1, a: 1}
-  opponentColors: []

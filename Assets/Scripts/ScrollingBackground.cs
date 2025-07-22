@@ -25,7 +25,7 @@ public class ScrollingBackground : MonoBehaviour
         // Loop horizontal
         if (transform.position.x <= -backgroundWidth)
         {
-            transform.position += new Vector3(backgroundWidth * 2f, 0f, 0f);
+            transform.position += new Vector3((backgroundWidth * 2f) - 0.1f, 0f, 0f);
         }
     }
 }
