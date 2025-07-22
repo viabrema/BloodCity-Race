@@ -64,6 +64,7 @@ public class HUDVelocity : MonoBehaviour
         for (int i = 0; i < RaceManager.Instance.oponents.Length; i++)
         {
             GameObject o = Instantiate(pointerPrefab, pointerContainer);
+            if (RaceManager.Instance.oponents[i] == null) continue;
             Color colorToUse = RaceManager.Instance.oponents[i].pointColor;
             colorToUse.a = 1f;
             o.GetComponent<Image>().color = colorToUse;

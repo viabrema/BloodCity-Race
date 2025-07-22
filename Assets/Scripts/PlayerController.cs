@@ -7,11 +7,14 @@ public class PlayerController : MonoBehaviour
     private float verticalVelocity = 0f;
     private AudioSource accelerationSound;
 
+    private ParticleSystem nitroEffect;
+
     void Start()
     {
         accelerationSound = GetComponent<AudioSource>();
         accelerationSound.loop = true;
         accelerationSound.Play(); // Garante que o som comece tocando
+        nitroEffect = GameObject.Find("Turbo")?.GetComponent<ParticleSystem>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -44,6 +47,16 @@ public class PlayerController : MonoBehaviour
         float tiltAngle = verticalVelocity * 5f; // valor reduzido para suavidade
         Quaternion targetRotation = Quaternion.Euler(0, 0, tiltAngle);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+
+        // Efeito de nitro
+        if (RaceManager.Instance.currentSpeed > RaceManager.Instance.maxSpeed)
+        {
+            nitroEffect.Play();
+        }
+        else
+        {
+            nitroEffect.Stop();
+        }
 
         // --- Se corrida ainda não começou, trava a velocidade ---
         if (!RaceManager.Instance.startedRace)
@@ -140,6 +153,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ActivateNitro()
     {
+        GameObject Turbo = GameObject.Find("Turbo");
+        Turbo.GetComponent<AudioSource>().Play();
         isNitroActive = true;
         RaceManager.Instance.currentSpeed += RaceManager.Instance.nitroBoost;
 

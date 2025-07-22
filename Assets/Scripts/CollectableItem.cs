@@ -7,7 +7,8 @@ public class CollectibleItem : MonoBehaviour
     public GameObject collectEffect; // Prefab de partículas
     public GameObject Bag;
 
-    private bool destroyed = false;
+    [Header("Estado")]
+    public bool destroyed = false;
 
     private AudioSource collectSound;
 
@@ -15,6 +16,7 @@ public class CollectibleItem : MonoBehaviour
     void Start()
     {
         collectSound = GetComponent<AudioSource>();
+
         if (collectSound == null)
         {
             Debug.LogError("CollectibleItem: AudioSource not found on the item!");
@@ -38,6 +40,7 @@ public class CollectibleItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Collider2D itemCollider = GetComponent<Collider2D>();
         if ((other.CompareTag("Player") || other.CompareTag("Oponent")) && !destroyed)
         {
             TriggerCollectEffect();
@@ -45,6 +48,7 @@ public class CollectibleItem : MonoBehaviour
             {
                 collectSound.Play();
             }
+            itemCollider.enabled = false; // Desativa o collider para evitar múltiplas coletas
             destroyed = true;
             Debug.Log($"Item {type} coletado por {other.tag}!");
             Destroy(Bag);
