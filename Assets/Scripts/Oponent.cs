@@ -9,6 +9,10 @@ public class Oponent : MonoBehaviour
     public float acceleration = 10f;
     public float deceleration = 10f;
     public float slowDownFactor = 0.8f;
+    public float distanceTraveled = 0f;
+
+    [Header("HUD")]
+    public Color pointColor = Color.red;
 
     [Header("Evitar Obstáculos")]
     public float avoidSpeed = 3f;
@@ -30,9 +34,6 @@ public class Oponent : MonoBehaviour
 
     private bool avoidingObstacle = false;
     private bool isSlowingDown = false;
-
-    // Colisão com parede
-    private bool touchingWall = false;
 
     // Colisão com obstáculo
     private bool isTouchingObstacle = false;
@@ -97,21 +98,17 @@ public class Oponent : MonoBehaviour
 
     private void UpdateRaceDistance()
     {
-        if (indexInRaceManager < RaceManager.Instance.distancesTraveledOponents.Length)
-        {
-            RaceManager.Instance.distancesTraveledOponents[indexInRaceManager] += currentSpeed * Time.deltaTime;
-        }
+        distanceTraveled += currentSpeed * Time.deltaTime;
+
     }
 
     private void MoveHorizontal()
     {
         float relativeSpeed = RaceManager.Instance.currentSpeed - currentSpeed;
-
-        if (!touchingWall)
-        {
-            transform.Translate(Vector2.left * relativeSpeed * Time.deltaTime);
-        }
+        transform.Translate(Vector2.left * relativeSpeed * Time.deltaTime);
     }
+
+
 
     private void MoveVertical()
     {
@@ -163,16 +160,6 @@ public class Oponent : MonoBehaviour
         }
 
         timeSinceLastObstacle = 0f;
-    }
-
-    public void SetWallCollision(bool isTouching, float suggestedDirection)
-    {
-        touchingWall = isTouching;
-
-        if (isTouching)
-        {
-            OnSensorTrigger(suggestedDirection);
-        }
     }
 
     public void SetSlowedByObstacle(bool value, float direction, Collider2D obstacle)

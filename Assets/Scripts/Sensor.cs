@@ -17,12 +17,8 @@ public class OponentSensor : MonoBehaviour
     {
         if (oponent == null) return;
 
-        if (other.CompareTag("Obstacle"))
-        {
-            float direction = other.transform.position.y > transform.position.y ? -1f : 1f;
-            oponent.SetSlowedByObstacle(true, direction, other);
-        }
-        else if (other.CompareTag("Player") || other.CompareTag("Oponent"))
+
+        if (other.CompareTag("Player") || other.CompareTag("Oponent") || other.CompareTag("Obstacle"))
         {
             float direction = other.transform.position.y > transform.position.y ? -1f : 1f;
             oponent.OnSensorTrigger(direction);

@@ -331,6 +331,18 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.b
+      value: 0.7686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.g
+      value: 0.36078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.r
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: indexInRaceManager
       value: 1
       objectReference: {fileID: 0}
@@ -550,7 +562,7 @@ MonoBehaviour:
   playerTransform: {fileID: 920559146125993656, guid: 9a311c01dae4b864eacbcc063b9b32e5, type: 3}
   distanceTraveled: 0
   currentSpeed: 0
-  maxSpeed: 50
+  maxSpeed: 60
   acceleration: 10
   deceleration: 10
   nitroBoost: 20
@@ -685,6 +697,18 @@ PrefabInstance:
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: maxSpeed
       value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.b
+      value: 0.18039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.g
+      value: 0.627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.r
+      value: 0.078431375
       objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: indexInRaceManager
@@ -1337,6 +1361,18 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.b
+      value: 0.60784316
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.g
+      value: 0.2901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: indexInRaceManager
       value: 3
       objectReference: {fileID: 0}
@@ -1406,6 +1442,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1062869088}
     m_Modifications:
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.b
+      value: 0.25490198
+      objectReference: {fileID: 0}
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: pointColor.g
+      value: 0.8352942
+      objectReference: {fileID: 0}
     - target: {fileID: 7738950530147649740, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: m_Name
       value: Oponent

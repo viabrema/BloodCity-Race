@@ -27,6 +27,8 @@ public class RaceManager : MonoBehaviour
     [Header("Oponentes")]
     public Oponent[] oponents;
 
+    public static event System.Action OnOponentsReady;
+
 
     // [HideInInspector] // impede o Unity de tentar desenhar isso no Inspector (evita StackOverflow)
     public float[] distancesTraveledOponents;
@@ -50,11 +52,12 @@ public class RaceManager : MonoBehaviour
 
         // Pega todos os oponentes existentes na cena
         oponents = FindObjectsOfType<Oponent>();
-        distancesTraveledOponents = new float[oponents.Length];
+        // distancesTraveledOponents = new float[oponents.Length];
         for (int i = 0; i < oponents.Length; i++)
         {
             oponents[i].indexInRaceManager = i;
         }
+        OnOponentsReady?.Invoke();
     }
 
     void Update()
@@ -71,9 +74,9 @@ public class RaceManager : MonoBehaviour
     {
         distanceTraveled = 0f;
 
-        for (int i = 0; i < distancesTraveledOponents.Length; i++)
+        for (int i = 0; i < oponents.Length; i++)
         {
-            distancesTraveledOponents[i] = 0f;
+            oponents[i].distanceTraveled = 0f;
         }
 
         // Reseta a velocidade e outros parâmetros

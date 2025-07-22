@@ -14,10 +14,19 @@ public class HUDVelocity : MonoBehaviour
     [Header("Customização")]
     public Color playerColor = Color.white;
 
-    public List<Color> opponentColors = new List<Color> { Color.red, Color.blue, Color.green, Color.yellow };
     private float barWidth;
     private RectTransform playerPointer;
     private List<RectTransform> opponentPointers = new List<RectTransform>();
+
+    void Awake()
+    {
+        RaceManager.OnOponentsReady += CreateOpponentPointers;
+    }
+
+    void OnDestroy()
+    {
+        RaceManager.OnOponentsReady -= CreateOpponentPointers;
+    }
 
     void Start()
     {
@@ -35,23 +44,31 @@ public class HUDVelocity : MonoBehaviour
         playerPointer = p.GetComponent<RectTransform>();
         playerPointer.SetSiblingIndex(10);
 
-        // Cria ponteiros dos oponentes com base na quantidade no RaceManager
-        if (RaceManager.Instance != null)
+        // Se RaceManager já estiver inicializado, cria os ponteiros imediatamente
+        if (RaceManager.Instance != null && RaceManager.Instance.oponents != null && RaceManager.Instance.oponents.Length > 0)
         {
-
-            for (int i = 0; i < opponentColors.Count; i++)
-            {
-                GameObject o = Instantiate(pointerPrefab, pointerContainer);
-                Color colorToUse = (i < opponentColors.Count) ? opponentColors[i] : Color.gray;
-                colorToUse.a = 1f;
-                o.GetComponent<Image>().color = colorToUse;
-                RectTransform rect = o.GetComponent<RectTransform>();
-                opponentPointers.Add(rect);
-            }
+            CreateOpponentPointers();
         }
-        else
+    }
+
+    void CreateOpponentPointers()
+    {
+        // Remove ponteiros antigos, se existirem
+        foreach (var old in opponentPointers)
         {
-            Debug.LogWarning("HUDVelocity: RaceManager.Instance ainda não está disponível no Start.");
+            if (old != null) Destroy(old.gameObject);
+        }
+        opponentPointers.Clear();
+
+        // Cria novos ponteiros
+        for (int i = 0; i < RaceManager.Instance.oponents.Length; i++)
+        {
+            GameObject o = Instantiate(pointerPrefab, pointerContainer);
+            Color colorToUse = RaceManager.Instance.oponents[i].pointColor;
+            colorToUse.a = 1f;
+            o.GetComponent<Image>().color = colorToUse;
+            RectTransform rect = o.GetComponent<RectTransform>();
+            opponentPointers.Add(rect);
         }
     }
 
@@ -62,7 +79,8 @@ public class HUDVelocity : MonoBehaviour
         // Atualiza texto de velocidade
         int speed = Mathf.RoundToInt(RaceManager.Instance.currentSpeed);
         velocityText.text = speed.ToString();
-        // Atualiza texto de item coletado
+
+        // Atualiza item coletado
         if (!string.IsNullOrEmpty(RaceManager.Instance.collectedItem))
         {
             itemText.text = "Item: " + RaceManager.Instance.collectedItem;
@@ -80,9 +98,9 @@ public class HUDVelocity : MonoBehaviour
         // Atualiza ponteiros dos oponentes
         for (int i = 0; i < opponentPointers.Count; i++)
         {
-            if (i < RaceManager.Instance.distancesTraveledOponents.Length)
+            if (i < RaceManager.Instance.oponents.Length)
             {
-                float opponentProgress = Mathf.Clamp01(RaceManager.Instance.distancesTraveledOponents[i] / RaceManager.Instance.totalRaceDistance);
+                float opponentProgress = Mathf.Clamp01(RaceManager.Instance.oponents[i].distanceTraveled / RaceManager.Instance.totalRaceDistance);
                 float opponentPosition = opponentProgress * barWidth;
                 opponentPointers[i].anchoredPosition = new Vector2(opponentPosition, opponentPointers[i].anchoredPosition.y);
             }
