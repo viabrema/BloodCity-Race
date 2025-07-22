@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance;
@@ -57,6 +57,16 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (distanceTraveled >= totalRaceDistance)
+        {
+            Debug.Log("Corrida finalizada!");
+            ResetRace();
+            return;
+        }
+    }
+
     public void ResetRace()
     {
         distanceTraveled = 0f;
@@ -76,5 +86,6 @@ public class RaceManager : MonoBehaviour
         {
             Destroy(obj);
         }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

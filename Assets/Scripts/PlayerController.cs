@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour
@@ -61,7 +60,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             RaceManager.Instance.ResetRace();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
