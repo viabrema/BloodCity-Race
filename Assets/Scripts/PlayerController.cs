@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (RaceManager.Instance == null || RaceManager.Instance.gameStopped) return;
         HandleInput();
         RaceManager.Instance.distanceTraveled += RaceManager.Instance.currentSpeed * Time.deltaTime;
 
@@ -138,10 +139,8 @@ public class PlayerController : MonoBehaviour
                 pulseEffect.Play();
                 AudioSource audio = pulse.GetComponent<AudioSource>();
                 audio.Play();
-
-                RaceManager.Instance.pulseTime = 5f; // Define o tempo de efeito do pulso
-
                 RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
+                StartCoroutine(DelayedPulseTime());
             }
             else if (RaceManager.Instance.collectedItem == "shield")
             {
@@ -174,5 +173,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(RaceManager.Instance.nitroDuration);
 
         isNitroActive = false;
+    }
+
+    IEnumerator DelayedPulseTime()
+    {
+        yield return new WaitForSeconds(2f);
+        RaceManager.Instance.pulseTime = RaceManager.Instance.maxPulseTime;
     }
 }

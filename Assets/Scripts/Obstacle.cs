@@ -32,7 +32,7 @@ public class Obstacle : MonoBehaviour
 
     void Update()
     {
-        if (RaceManager.Instance == null) return;
+        if (RaceManager.Instance == null || RaceManager.Instance.gameStopped) return;
 
         if (transform.position.x < -20f)
         {

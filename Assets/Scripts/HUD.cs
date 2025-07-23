@@ -72,7 +72,7 @@ public class HUDVelocity : MonoBehaviour
 
     void Update()
     {
-        if (RaceManager.Instance == null) return;
+        if (RaceManager.Instance == null || RaceManager.Instance.gameStopped) return;
 
         // Atualiza texto de velocidade
         int speed = Mathf.RoundToInt(RaceManager.Instance.currentSpeed);
