@@ -554,7 +554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cafade98a177fdd48a80ef5f9777db35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 920559146125993656, guid: 9a311c01dae4b864eacbcc063b9b32e5, type: 3}
   distanceTraveled: 0
   currentSpeed: 0
   maxSpeed: 50
@@ -568,6 +567,7 @@ MonoBehaviour:
   verticalSpeed: 5
   durability: 100
   nitroLevel: 1
+  pulseTime: 0
   oponents: []
   distancesTraveledOponents: []
 --- !u!4 &571248222

@@ -30,6 +30,7 @@ public class HUDVelocity : MonoBehaviour
 
     void Start()
     {
+
         if (velocityBar == null || pointerContainer == null || pointerPrefab == null || velocityText == null)
         {
             Debug.LogError("HUDVelocity: Missing references in the inspector.");
@@ -43,16 +44,11 @@ public class HUDVelocity : MonoBehaviour
         p.GetComponent<Image>().color = playerColor;
         playerPointer = p.GetComponent<RectTransform>();
         playerPointer.SetSiblingIndex(10);
-
-        // Se RaceManager já estiver inicializado, cria os ponteiros imediatamente
-        if (RaceManager.Instance != null && RaceManager.Instance.oponents != null && RaceManager.Instance.oponents.Length > 0)
-        {
-            CreateOpponentPointers();
-        }
     }
 
     void CreateOpponentPointers()
     {
+
         // Remove ponteiros antigos, se existirem
         foreach (var old in opponentPointers)
         {
@@ -61,6 +57,7 @@ public class HUDVelocity : MonoBehaviour
         opponentPointers.Clear();
 
         // Cria novos ponteiros
+
         for (int i = 0; i < RaceManager.Instance.oponents.Length; i++)
         {
             GameObject o = Instantiate(pointerPrefab, pointerContainer);

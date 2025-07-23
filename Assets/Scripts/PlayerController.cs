@@ -130,10 +130,17 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(ActivateNitro());
                 RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
             }
-            else if (RaceManager.Instance.collectedItem == "shot")
+            else if (RaceManager.Instance.collectedItem == "pulse")
             {
-                // Implementar lógica de tiro
-                Debug.Log("Disparando tiro!");
+                GameObject pulse = GameObject.Find("PulseEffect");
+                ParticleSystem pulseEffect = pulse.GetComponent<ParticleSystem>();
+                pulseEffect.Clear();
+                pulseEffect.Play();
+                AudioSource audio = pulse.GetComponent<AudioSource>();
+                audio.Play();
+
+                RaceManager.Instance.pulseTime = 5f; // Define o tempo de efeito do pulso
+
                 RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
             }
             else if (RaceManager.Instance.collectedItem == "shield")

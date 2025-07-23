@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance;
 
-    public Transform playerTransform;
+    // public Transform playerTransform;
 
     [Header("Velocidade")]
     public float distanceTraveled = 0f;
@@ -24,13 +25,14 @@ public class RaceManager : MonoBehaviour
     public int durability = 100;
     public int nitroLevel = 1;
 
+    public float pulseTime = 0f;
+
     [Header("Oponentes")]
     public Oponent[] oponents;
 
     public static event System.Action OnOponentsReady;
 
 
-    // [HideInInspector] // impede o Unity de tentar desenhar isso no Inspector (evita StackOverflow)
     public float[] distancesTraveledOponents;
 
     void Awake()
@@ -39,6 +41,7 @@ public class RaceManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // persiste entre cenas
+            SceneManager.sceneLoaded += OnSceneLoaded; // Registra o evento
         }
         else
         {
@@ -46,13 +49,29 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded; // Desregistra o evento
+        }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        createOponents(); // Garante que os oponentes sejam criados após o carregamento da cena
+    }
+
     void Start()
     {
-        playerTransform = GameObject.FindWithTag("Player")?.transform;
 
-        // Pega todos os oponentes existentes na cena
+        createOponents();
+    }
+
+    void createOponents()
+    {
         oponents = FindObjectsOfType<Oponent>();
-        // distancesTraveledOponents = new float[oponents.Length];
+        distancesTraveledOponents = new float[oponents.Length];
         for (int i = 0; i < oponents.Length; i++)
         {
             oponents[i].indexInRaceManager = i;
@@ -68,27 +87,23 @@ public class RaceManager : MonoBehaviour
             ResetRace();
             return;
         }
+
+        if (pulseTime > 0f)
+        {
+            pulseTime -= Time.deltaTime;
+            if (pulseTime <= 0f)
+            {
+                pulseTime = 0f;
+            }
+        }
     }
 
     public void ResetRace()
     {
         distanceTraveled = 0f;
-
-        for (int i = 0; i < oponents.Length; i++)
-        {
-            oponents[i].distanceTraveled = 0f;
-        }
-
-        // Reseta a velocidade e outros parâmetros
         startedRace = false;
         currentSpeed = 0f;
 
-        // Destroi todos os obstáculos
-        var obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
-        foreach (var obj in obstacles)
-        {
-            Destroy(obj);
-        }
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

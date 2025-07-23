@@ -57,6 +57,11 @@ public class Oponent : MonoBehaviour
             return;
         }
 
+        if (RaceManager.Instance.pulseTime > 0f)
+        {
+            currentSpeed = 0f;
+        }
+
         HandleHorizontalSpeed();
         UpdateRaceDistance();
         MoveHorizontal();
