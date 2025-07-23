@@ -65,7 +65,6 @@ public class RaceManager : MonoBehaviour
     void Start()
     {
 
-        createOponents();
     }
 
     void createOponents()
