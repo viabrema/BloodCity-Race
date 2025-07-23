@@ -57,7 +57,7 @@ public class UpgradeScreen : MonoBehaviour
         nitroUpgrades.Add(new nitroUpgrade { name = "Carga do Nitro", description = "Aumenta a duração do nitro em 1 segundo.", type = "nitroDuration" });
         nitroUpgrades.Add(new nitroUpgrade { name = "Boost", description = "Aumenta o impulso do nitro em 10%.", type = "nitroBoost" });
         nitroUpgrades.Add(new nitroUpgrade { name = "Frequência do Nitro", description = "Aumenta a frequência de aparecimento do nitro.", type = "nitroFrequency" });
-        pulseUpgrades.Add(new pulseUpgrade { name = "Duração do Pulso", description = "Aumenta a duração do pulso em 1 segundo.", type = "pulseDuration" });
+        pulseUpgrades.Add(new pulseUpgrade { name = "Duração do Pulso", description = "Aumenta a duração do pulso em 1 segundo.", type = "pulseDurability" });
         pulseUpgrades.Add(new pulseUpgrade { name = "Frequência do Pulso", description = "Aumenta a frequência de aparecimento do pulso.", type = "pulseFrequency" });
 
         // Exibe os upgrades iniciais

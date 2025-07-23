@@ -86,7 +86,7 @@ public class pulseUpgrade
 
     public void execute()
     {
-        if (type == "durability")
+        if (type == "pulseDurability")
         {
             addDurability();
         }

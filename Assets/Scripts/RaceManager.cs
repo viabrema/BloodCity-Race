@@ -41,6 +41,12 @@ public class RaceManager : MonoBehaviour
     public GameObject upgradeScreen;
     private bool openedUpgradeScreen = false;
 
+    [Header("Sons")]
+
+    public GameObject[] songs;
+
+    public int selectedSongIndex = 0;
+
     void Awake()
     {
         if (Instance == null)
@@ -65,7 +71,37 @@ public class RaceManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        createSongs();
         createOponents(); // Garante que os oponentes sejam criados após o carregamento da cena
+        PlayCurrentSong();
+    }
+
+    void PlayCurrentSong()
+    {
+        if (songs.Length == 0) return;
+
+        // Para todas as músicas
+        foreach (var song in songs)
+        {
+            if (song != null)
+            {
+                AudioSource audioSource = song.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.Stop();
+                }
+            }
+        }
+
+        // Toca a música selecionada
+        if (selectedSongIndex < songs.Length && songs[selectedSongIndex] != null)
+        {
+            AudioSource selectedAudio = songs[selectedSongIndex].GetComponent<AudioSource>();
+            if (selectedAudio != null)
+            {
+                selectedAudio.Play();
+            }
+        }
     }
 
     void Start()
@@ -112,6 +148,16 @@ public class RaceManager : MonoBehaviour
         OnOponentsReady?.Invoke();
     }
 
+    void createSongs()
+    {
+        //busca pela tag "Music"
+        songs = GameObject.FindGameObjectsWithTag("Music");
+        if (songs.Length == 0)
+        {
+            Debug.LogWarning("Nenhum AudioSource encontrado na cena!");
+        }
+    }
+
     void PauseGame(bool pause)
     {
         AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
@@ -155,6 +201,19 @@ public class RaceManager : MonoBehaviour
                 HideUpgradeScreen();
             }
         }
+
+        // "q" e "e" trocam a de música
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            selectedSongIndex = (selectedSongIndex - 1 + songs.Length) % songs.Length;
+            PlayCurrentSong();
+        }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            selectedSongIndex = (selectedSongIndex + 1) % songs.Length;
+            PlayCurrentSong();
+        }
+
 
         if (gameStopped) return; // Não atualiza enquanto o jogo está pausado
 
