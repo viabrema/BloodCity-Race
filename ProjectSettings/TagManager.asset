@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - Item
   - Music
+  - Scene
   layers:
   - Default
   - TransparentFX

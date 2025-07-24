@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class DialogLine
@@ -31,8 +32,10 @@ public class DialogScene
     }
 }
 
-public class Dialog : MonoBehaviour
+public class Cutscenes : MonoBehaviour
 {
+    public static Cutscenes Instance;
+
     public List<DialogScene> scenes = new List<DialogScene>();
     public int currentSceneIndex = 0;
     public int currentLineIndex = 0;
@@ -44,8 +47,25 @@ public class Dialog : MonoBehaviour
     private Coroutine typingCoroutine;
     private string fullLine = "";
 
+    public List<GameObject> cutScenesList;
+
     void Awake()
     {
+
+        // Singleton
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        // Suas cenas
+        scenes.Clear(); // Evita duplicatas se voltar de alguma cena
+
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
         // Cena 1
         var scene1 = new DialogScene("scene01");
         scene1.lines.Add(new DialogLine("Funcionário", "Você fracassou. Sem pagamento, sem liberação."));
@@ -67,8 +87,37 @@ public class Dialog : MonoBehaviour
         ShowCurrentLine();
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Dialog")
+        {
+            // Busca todos os GameObjects com tag "Scene"
+            cutScenesList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Scene"));
+
+            // Ordena por nome (alfabética → respeita Scene_01, Scene_02, etc.)
+            cutScenesList.Sort((a, b) => a.name.CompareTo(b.name));
+
+            // Reinicia visual para garantir estado inicial
+            for (int i = 0; i < cutScenesList.Count; i++)
+                cutScenesList[i].SetActive(i == currentSceneIndex);
+
+            currentLineIndex = 0;
+            ShowCurrentLine();
+        }
+    }
+
     void Update()
     {
+        if (cutScenesList != null && cutScenesList.Count > 0)
+        {
+            for (int i = 0; i < cutScenesList.Count; i++)
+            {
+
+                cutScenesList[i].SetActive(i == currentSceneIndex);
+
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
@@ -104,6 +153,19 @@ public class Dialog : MonoBehaviour
         }
     }
 
+    public void SetCurrentScene(int index)
+    {
+        if (index < 0 || index >= scenes.Count)
+        {
+            Debug.LogError("Índice de cena inválido: " + index);
+            return;
+        }
+
+        currentSceneIndex = index;
+        currentLineIndex = 0;
+        ShowCurrentLine();
+    }
+
     IEnumerator TypeText(string line)
     {
         isTyping = true;
@@ -129,6 +191,7 @@ public class Dialog : MonoBehaviour
         }
         else
         {
+            cutScenesList[currentSceneIndex].GetComponent<CutsceneController>()?.OnClosingCutscene();
             Debug.Log("Fim do diálogo.");
             // Aqui você pode desativar o painel, ativar botão, chamar evento, etc.
         }
