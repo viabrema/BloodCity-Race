@@ -222,6 +222,12 @@ public class RaceManager : MonoBehaviour
                 Position position = oponents[opponentIndex].GetComponentInChildren<Position>();
                 position.SetPosition(i); // Define a posição do oponente
             }
+            else
+            {
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                Position position = player.GetComponentInChildren<Position>();
+                position.SetPosition(i); // Define a posição do jogador
+            }
 
         }
     }
