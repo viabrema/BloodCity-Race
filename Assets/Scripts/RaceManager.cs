@@ -16,7 +16,7 @@ public class RaceManager : MonoBehaviour
     public string collectedItem = ""; // Guarda o tipo de item coletado (ex: "Nitro", "Shot", etc.)
     public bool gameStopped = false;
     public float pulseTime = 0f;
-
+    public bool gameInitialized = false;
     public bool startedRace = false;
 
     [Header("Upgrades")]
@@ -73,7 +73,24 @@ public class RaceManager : MonoBehaviour
     {
         createSongs();
         createOponents(); // Garante que os oponentes sejam criados após o carregamento da cena
+        // selectedSongIndex = (selectedSongIndex + 1) % songs.Length;
         PlayCurrentSong();
+
+    }
+
+    public void UpgradeScreenStarted()
+    {
+        upgradeScreen = GameObject.Find("UpgradeScreen");
+        if (!gameInitialized)
+        {
+            HideUpgradeScreen();
+            gameInitialized = true;
+
+        }
+        else
+        {
+            ShowUpgradeScreen();
+        }
     }
 
     void PlayCurrentSong()
@@ -106,14 +123,13 @@ public class RaceManager : MonoBehaviour
 
     void Start()
     {
-        HideUpgradeScreen();
+
     }
 
     public void ShowUpgradeScreen()
     {
         if (upgradeScreen != null)
         {
-            PauseGame(true);
             upgradeScreen.SetActive(true);
             upgradeScreen.GetComponent<UpgradeScreen>().RandomizeUpgrades();
         }
@@ -127,7 +143,6 @@ public class RaceManager : MonoBehaviour
     {
         if (upgradeScreen != null)
         {
-            PauseGame(false);
             upgradeScreen.SetActive(false);
 
         }
@@ -183,7 +198,7 @@ public class RaceManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameStopped = !gameStopped;
             PauseGame(gameStopped);
@@ -214,6 +229,18 @@ public class RaceManager : MonoBehaviour
             PlayCurrentSong();
         }
 
+        // ========== CONTROLE DE INÍCIO E REINÍCIO ==========
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (openedUpgradeScreen) return;
+            startedRace = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            ResetRace();
+        }
+
 
         if (gameStopped) return; // Não atualiza enquanto o jogo está pausado
 
@@ -239,7 +266,6 @@ public class RaceManager : MonoBehaviour
         distanceTraveled = 0f;
         startedRace = false;
         currentSpeed = 0f;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

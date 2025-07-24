@@ -29,9 +29,6 @@ public class UpgradeScreen : MonoBehaviour
     void Start()
     {
 
-        GameObject upgradeScreen = GameObject.Find("UpgradeScreen");
-        RaceManager.Instance.upgradeScreen = upgradeScreen;
-
         // Obtém referências aos componentes de texto
         motorName = GameObject.Find("MotorName").GetComponent<TextMeshProUGUI>();
         motorDescription = GameObject.Find("MotorDescription").GetComponent<TextMeshProUGUI>();
@@ -63,6 +60,7 @@ public class UpgradeScreen : MonoBehaviour
         // Exibe os upgrades iniciais
         RandomizeUpgrades();
         ApplyCardsEvents();
+        RaceManager.Instance.UpgradeScreenStarted();
     }
 
     public void ApplyCardsEvents()

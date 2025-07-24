@@ -33,6 +33,7 @@ public class ObstacleSpawner : MonoBehaviour
 
     void Update()
     {
+        if (RaceManager.Instance == null || RaceManager.Instance.gameStopped) return;
         if (nextObstacleIndex >= obstacleList.Count) return;
 
         var current = obstacleList[nextObstacleIndex];

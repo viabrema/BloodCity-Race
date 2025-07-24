@@ -37,7 +37,7 @@ public class HUDVelocity : MonoBehaviour
             return;
         }
 
-        barWidth = velocityBar.GetComponent<RectTransform>().sizeDelta.x - 100f;
+        barWidth = velocityBar.GetComponent<RectTransform>().sizeDelta.x;
 
         // Cria ponteiro do jogador
         GameObject p = Instantiate(pointerPrefab, pointerContainer);

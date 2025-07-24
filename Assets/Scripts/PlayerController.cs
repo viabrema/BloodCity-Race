@@ -70,17 +70,6 @@ public class PlayerController : MonoBehaviour
         {
             RaceManager.Instance.currentSpeed = 0f;
         }
-
-        // ========== CONTROLE DE INÍCIO E REINÍCIO ==========
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            RaceManager.Instance.startedRace = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            RaceManager.Instance.ResetRace();
-        }
     }
 
     void HandleInput()

@@ -560,6 +560,7 @@ MonoBehaviour:
   collectedItem: 
   gameStopped: 0
   pulseTime: 0
+  gameInitialized: 0
   startedRace: 0
   nitroDuration: 1
   acceleration: 10
@@ -573,6 +574,8 @@ MonoBehaviour:
   oponents: []
   distancesTraveledOponents: []
   upgradeScreen: {fileID: 780740570}
+  songs: []
+  selectedSongIndex: 0
 --- !u!4 &571248222
 Transform:
   m_ObjectHideFlags: 0
@@ -795,6 +798,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+--- !u!1 &670271832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4062104356192981346, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
+  m_PrefabInstance: {fileID: 1603889371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &720038870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2897,13 +2905,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1181640131965702793, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
+      propertyPath: velocityBar
+      value: 
+      objectReference: {fileID: 670271832}
     - target: {fileID: 2042448535372157640, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1086056844}
     - target: {fileID: 4850501577173254523, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -54.200012
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4850501577173254523, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7856137296579493395, guid: 104e6d940b5bb1549befe7161c3abfd2, type: 3}
       propertyPath: m_Name
