@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening; // Importa o DOTween
+using UnityEngine.EventSystems; // Necessário para EventTrigger e EventTriggerType
 
 public class UpgradeScreen : MonoBehaviour
 {
@@ -69,6 +71,42 @@ public class UpgradeScreen : MonoBehaviour
         Card1.GetComponent<Button>().onClick.AddListener(() => executeUpgrade("motor"));
         Card2.GetComponent<Button>().onClick.AddListener(() => executeUpgrade("nitro"));
         Card3.GetComponent<Button>().onClick.AddListener(() => executeUpgrade("pulse"));
+
+        // Adiciona animações ao passar o mouse
+        AddHoverAnimation(Card1);
+        AddHoverAnimation(Card2);
+        AddHoverAnimation(Card3);
+    }
+
+    void AddHoverAnimation(GameObject card)
+    {
+        EventTrigger trigger = card.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = card.AddComponent<EventTrigger>();
+        }
+
+        // Evento para quando o mouse entra
+        EventTrigger.Entry pointerEnter = new EventTrigger.Entry();
+        pointerEnter.eventID = EventTriggerType.PointerEnter;
+        pointerEnter.callback.AddListener((data) =>
+        {
+            card.transform.DOKill(); // Cancela animações anteriores
+            card.transform.DOScale(8f, 0.2f).SetUpdate(true); // Zoom
+            card.transform.DOShakeRotation(0.5f, new Vector3(0, 0, 10), vibrato: 10, randomness: 90).SetUpdate(true); // Efeito de shake
+        });
+        trigger.triggers.Add(pointerEnter);
+
+        // Evento para quando o mouse sai
+        EventTrigger.Entry pointerExit = new EventTrigger.Entry();
+        pointerExit.eventID = EventTriggerType.PointerExit;
+        pointerExit.callback.AddListener((data) =>
+        {
+            card.transform.DOKill(); // Cancela animações anteriores
+            card.transform.DOScale(7f, 0.2f).SetUpdate(true); // Volta ao tamanho original
+            card.transform.DORotate(Vector3.zero, 0.5f).SetUpdate(true); // Volta à rotação original
+        });
+        trigger.triggers.Add(pointerExit);
     }
 
     public void executeUpgrade(string type = "motor")

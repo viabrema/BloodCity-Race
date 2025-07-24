@@ -99,11 +99,11 @@ public class Obstacle : MonoBehaviour
 
     private void HandleOponentCollision()
     {
-        PlayCollisionEffects();
+        PlayCollisionEffects(false);
         Debug.Log("Oponente colidiu com obstáculo!");
     }
 
-    private void PlayCollisionEffects()
+    private void PlayCollisionEffects(bool shake = true)
     {
         if (sparkEffectPrefab != null)
         {
@@ -116,7 +116,7 @@ public class Obstacle : MonoBehaviour
             audioSource.Play();
         }
 
-        if (CameraShake.Instance != null)
+        if (CameraShake.Instance != null && shake)
         {
             CameraShake.Instance.Shake(0.2f, 0.1f);
         }
