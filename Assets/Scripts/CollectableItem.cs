@@ -46,6 +46,7 @@ public class CollectibleItem : MonoBehaviour
             TriggerCollectEffect();
             if (collectSound != null)
             {
+                collectSound.volume = RaceManager.Instance.musicVolume; // Ajusta o volume do som
                 collectSound.Play();
             }
             itemCollider.enabled = false; // Desativa o collider para evitar múltiplas coletas

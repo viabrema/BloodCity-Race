@@ -40,6 +40,8 @@ public class Obstacle : MonoBehaviour
             return;
         }
 
+        audioSource.volume = RaceManager.Instance.musicVolume * 0.3f;
+
         float speedMultiplier = isStatic
             ? RaceManager.Instance.currentSpeed
             : (RaceManager.Instance.currentSpeed * 0.1f) + baseSpeed;

@@ -46,6 +46,8 @@ public class RaceManager : MonoBehaviour
 
     public int selectedSongIndex = 0;
 
+    public float musicVolume = 1f;
+
     void Awake()
     {
         if (Instance == null)
@@ -68,8 +70,26 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void ChangeVolume(float volume)
+    {
+        Debug.Log("Mudando volume da música para: " + volume);
+        musicVolume = volume;
+        foreach (var song in songs)
+        {
+            if (song != null)
+            {
+                AudioSource audioSource = song.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.volume = musicVolume;
+                }
+            }
+        }
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Cena Carregada: " + scene.name);
         createSongs();
         createOponents(); // Garante que os oponentes sejam criados após o carregamento da cena
         // selectedSongIndex = (selectedSongIndex + 1) % songs.Length;
@@ -165,6 +185,17 @@ public class RaceManager : MonoBehaviour
     {
         //busca pela tag "Music"
         songs = GameObject.FindGameObjectsWithTag("Music");
+        if (songs.Length > 0)
+        {
+            foreach (var song in songs)
+            {
+                AudioSource audioSource = song.GetComponent<AudioSource>();
+                if (audioSource != null)
+                {
+                    audioSource.volume = musicVolume;
+                }
+            }
+        }
         if (songs.Length == 0)
         {
             Debug.LogWarning("Nenhum AudioSource encontrado na cena!");

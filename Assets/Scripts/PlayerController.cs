@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         // Ajuste de volume e pitch do som de aceleração
         float speedPercent = RaceManager.Instance.currentSpeed / RaceManager.Instance.maxSpeed;
         speedPercent = Mathf.Clamp01(speedPercent);
-        // accelerationSound.volume = 0.5f + (speedPercent * 0.5f);
+        accelerationSound.volume = RaceManager.Instance.musicVolume * 0.5f;
         accelerationSound.pitch = 0.5f + speedPercent * 5f;
 
         // Inclinação visual do carro ao subir ou descer
@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
                 pulseEffect.Clear();
                 pulseEffect.Play();
                 AudioSource audio = pulse.GetComponent<AudioSource>();
+                audio.volume = RaceManager.Instance.musicVolume * 0.5f;
                 audio.Play();
                 RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
                 StartCoroutine(DelayedPulseTime());
@@ -155,7 +156,9 @@ public class PlayerController : MonoBehaviour
     IEnumerator ActivateNitro()
     {
         GameObject Turbo = GameObject.Find("Turbo");
-        Turbo.GetComponent<AudioSource>().Play();
+        AudioSource audio = Turbo.GetComponent<AudioSource>();
+        audio.volume = RaceManager.Instance.musicVolume * 0.5f;
+        audio.Play();
         isNitroActive = true;
         RaceManager.Instance.currentSpeed += RaceManager.Instance.nitroBoost;
 
