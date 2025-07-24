@@ -15,6 +15,7 @@ public class Cutscene01 : CutsceneController
     public override void OnClosingCutscene()
     {
         Debug.Log("Cena 01 encerrando, vai começar a corrida!");
+        Cutscenes.Instance.SetCurrentScene(1);
         // SceneManager.LoadScene("Corrida"); ou ativa HUD etc.
     }
 }
