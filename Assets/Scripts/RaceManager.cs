@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic; // Necessário para List<>
 using UnityEditor;
 public class RaceManager : MonoBehaviour
 {
@@ -34,8 +35,6 @@ public class RaceManager : MonoBehaviour
     public Oponent[] oponents;
 
     public static event System.Action OnOponentsReady;
-
-    public float[] distancesTraveledOponents;
 
     [Header("Screens")]
     public GameObject upgradeScreen;
@@ -155,7 +154,6 @@ public class RaceManager : MonoBehaviour
     void createOponents()
     {
         oponents = FindObjectsOfType<Oponent>();
-        distancesTraveledOponents = new float[oponents.Length];
         for (int i = 0; i < oponents.Length; i++)
         {
             oponents[i].indexInRaceManager = i;
@@ -193,6 +191,38 @@ public class RaceManager : MonoBehaviour
             }
             Time.timeScale = 1f;
             gameStopped = false;
+        }
+    }
+
+    public void CalculeOpoentPositionByDistance()
+    {
+        if (oponents == null || oponents.Length == 0) return;
+
+        // Cria uma lista com as distâncias percorridas por todos (player e oponentes)
+        List<(float distance, int index, bool isPlayer)> allDistances = new List<(float, int, bool)>();
+
+        // Adiciona a distância do player
+        allDistances.Add((distanceTraveled, -1, true)); // -1 para identificar o player
+
+        // Adiciona as distâncias dos oponentes
+        for (int i = 0; i < oponents.Length; i++)
+        {
+            allDistances.Add((oponents[i].distanceTraveled, i, false));
+        }
+
+        // Ordena pela distância em ordem decrescente
+        allDistances.Sort((a, b) => b.distance.CompareTo(a.distance));
+
+        // Atualiza a posição dos oponentes
+        for (int i = 0; i < allDistances.Count; i++)
+        {
+            if (!allDistances[i].isPlayer)
+            {
+                int opponentIndex = allDistances[i].index;
+                Position position = oponents[opponentIndex].GetComponentInChildren<Position>();
+                position.SetPosition(i); // Define a posição do oponente
+            }
+
         }
     }
 
@@ -259,6 +289,8 @@ public class RaceManager : MonoBehaviour
                 pulseTime = 0f;
             }
         }
+
+        CalculeOpoentPositionByDistance();
     }
 
     public void ResetRace()
