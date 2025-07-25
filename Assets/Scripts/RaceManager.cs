@@ -183,6 +183,7 @@ public class RaceManager : MonoBehaviour
 
     void createSongs()
     {
+        if (SceneManager.GetActiveScene().name != "Race01") return;
         //busca pela tag "Music"
         songs = GameObject.FindGameObjectsWithTag("Music");
         if (songs.Length > 0)
@@ -265,6 +266,7 @@ public class RaceManager : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name != "Race01") return;
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameStopped = !gameStopped;
@@ -315,6 +317,8 @@ public class RaceManager : MonoBehaviour
         {
             Debug.Log("Corrida finalizada!");
             ResetRace();
+            SceneManager.LoadScene("Dialog"); // Carrega a cena de diálogo ou finalização
+            Cutscenes.Instance.SetCurrentScene(0); // Avança para a próxima cena de cutscene
             return;
         }
 

@@ -91,6 +91,7 @@ public class UpgradeScreen : MonoBehaviour
         pointerEnter.eventID = EventTriggerType.PointerEnter;
         pointerEnter.callback.AddListener((data) =>
         {
+            if (!card.transform) return;
             card.transform.DOKill(); // Cancela animações anteriores
             card.transform.DOScale(8f, 0.2f).SetUpdate(true); // Zoom
             card.transform.DOShakeRotation(0.5f, new Vector3(0, 0, 10), vibrato: 10, randomness: 90).SetUpdate(true); // Efeito de shake
@@ -102,6 +103,7 @@ public class UpgradeScreen : MonoBehaviour
         pointerExit.eventID = EventTriggerType.PointerExit;
         pointerExit.callback.AddListener((data) =>
         {
+            if (!card.transform) return;
             card.transform.DOKill(); // Cancela animações anteriores
             card.transform.DOScale(7f, 0.2f).SetUpdate(true); // Volta ao tamanho original
             card.transform.DORotate(Vector3.zero, 0.5f).SetUpdate(true); // Volta à rotação original

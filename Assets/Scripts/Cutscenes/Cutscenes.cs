@@ -84,13 +84,15 @@ public class Cutscenes : MonoBehaviour
 
     void Start()
     {
-        ShowCurrentLine();
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Dialog")
         {
+            dialogText = GameObject.Find("Line")?.GetComponent<TextMeshProUGUI>();
+            characterNameText = GameObject.Find("Name")?.GetComponent<TextMeshProUGUI>();
+
             // Busca todos os GameObjects com tag "Scene"
             cutScenesList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Scene"));
 
@@ -108,6 +110,8 @@ public class Cutscenes : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name != "Dialog") return;
+
         if (cutScenesList != null && cutScenesList.Count > 0)
         {
             for (int i = 0; i < cutScenesList.Count; i++)
@@ -135,6 +139,7 @@ public class Cutscenes : MonoBehaviour
 
     public void ShowCurrentLine()
     {
+        if (SceneManager.GetActiveScene().name != "Dialog") return;
         if (currentSceneIndex < scenes.Count)
         {
             var currentScene = scenes[currentSceneIndex];

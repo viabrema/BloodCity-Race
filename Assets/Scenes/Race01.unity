@@ -556,7 +556,7 @@ MonoBehaviour:
   distanceTraveled: 0
   currentSpeed: 0
   deceleration: 10
-  totalRaceDistance: 5000
+  totalRaceDistance: 500
   collectedItem: 
   gameStopped: 0
   pulseTime: 0
@@ -575,6 +575,7 @@ MonoBehaviour:
   upgradeScreen: {fileID: 780740570}
   songs: []
   selectedSongIndex: 0
+  musicVolume: 1
 --- !u!4 &571248222
 Transform:
   m_ObjectHideFlags: 0
