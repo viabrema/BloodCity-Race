@@ -24,11 +24,16 @@ public class DialogLine
 public class DialogScene
 {
     public string sceneId;
-    public List<DialogLine> lines = new List<DialogLine>();
+    public List<List<DialogLine>> slices = new List<List<DialogLine>>();
 
     public DialogScene(string sceneId)
     {
         this.sceneId = sceneId;
+    }
+
+    public void AddSlice(List<DialogLine> slice)
+    {
+        slices.Add(slice);
     }
 }
 
@@ -39,9 +44,11 @@ public class Cutscenes : MonoBehaviour
     public List<DialogScene> scenes = new List<DialogScene>();
     public int currentSceneIndex = 0;
     public int currentLineIndex = 0;
+    public int currentSceneSliceIndex = 0;
 
     public TextMeshProUGUI dialogText;
     public TextMeshProUGUI characterNameText;
+    public AudioSource keyboardSound;
 
     private bool isTyping = false;
     private Coroutine typingCoroutine;
@@ -50,56 +57,90 @@ public class Cutscenes : MonoBehaviour
 
     void Awake()
     {
-
-        // Singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        // Suas cenas
-        scenes.Clear(); // Evita duplicatas se voltar de alguma cena
-
-
+        scenes.Clear();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         // Cena 1
         var scene1 = new DialogScene("scene01");
-        scene1.lines.Add(new DialogLine("Andrew", "Idiota! Como você consegue ser tão idiota Andrew?"));
-        scene1.lines.Add(new DialogLine("Andrew", "Sem o dinheiro da corrida, como vamos pagar a Faithlab?"));
-        scene1.lines.Add(new DialogLine("Andrew", "Como vamos tirar ela daquele lugar?"));
-        scene1.lines.Add(new DialogLine("Andrew", "..."));
+        scene1.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "Idiota! Como você consegue ser tão idiota Andrew?"),
+            new DialogLine("Andrew", "Sem o dinheiro da corrida, como vamos pagar a Faithlab?"),
+            new DialogLine("Andrew", "Como vamos tirar ela daquele lugar?"),
+            new DialogLine("Andrew", "...")
+        });
 
         // Cena 2
         var scene2 = new DialogScene("scene02");
-        scene2.lines.Add(new DialogLine("Andrew", "Lá está ela, o grande símbolo do império capitalista. A Faithlab."));
-        scene2.lines.Add(new DialogLine("Andrew", "Como eu pude assinar aquele contrato?"));
-        scene2.lines.Add(new DialogLine("Andrew", "Mas o que mais eu podia fazer? Era a única forma de salvá-la."));
+        scene2.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "O grande símbolo do império capitalista."),
+            new DialogLine("Andrew", "Como eu pude assinar aquele contrato?"),
+            new DialogLine("Andrew", "Mas o que mais eu podia ter feito? Era a única forma de salvá-la.")
+        });
 
+        // Cena 3
         var scene3 = new DialogScene("scene03");
-        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Você fracassou. Sem pagamento, sem liberação."));
-        scene3.lines.Add(new DialogLine("Andrew", "Como vocês podem fazer isso com ela? Ela não é um animal de laboratório!"));
-        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Vocês assinaram um contrato, não fizeram o pagamento. A cláusula é clara."));
-        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Até você pagar, sua esposa é propriedade da Faithlab Medical Corporation."));
-        scene3.lines.Add(new DialogLine("Andrew", "Seu cretino! Ela é uma pessoa!"));
+        scene3.AddSlice(new List<DialogLine> {
+            new DialogLine("Dr. Eron Dust", "Você fracassou. Sem pagamento, sem liberação."),
+            new DialogLine("Andrew", "Como vocês podem fazer isso com ela? Ela não é um animal de laboratório!"),
+            new DialogLine("Dr. Eron Dust", "Vocês assinaram um contrato, não fizeram o pagamento. A cláusula é clara."),
+            new DialogLine("Dr. Eron Dust", "Até você pagar, a Faithlab Medical Corporation tem o direito de uso exclusivo sobre sua esposa."),
+            new DialogLine("Andrew", "Seu cretino! Ela é uma pessoa!")
+        });
 
+        // Cena 4
         var scene4 = new DialogScene("scene04");
-        scene4.lines.Add(new DialogLine("Andrew", "O que fazer agora? Desistir?"));
-        scene4.lines.Add(new DialogLine("Andrew", "Merda! Me sinto tão impotente quanto uma criança."));
-        scene4.lines.Add(new DialogLine("????", "Andrew..."));
-        scene4.lines.Add(new DialogLine("Andrew", "..."));
+        scene4.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "O que fazer agora? Desistir?"),
+            new DialogLine("Andrew", "Merda! Me sinto tão impotente"),
+            new DialogLine("????", "Andrew..."),
+            new DialogLine("Andrew", "..."),
+            new DialogLine("Andrew", "Quem está falando?... quem é você?"),
+            new DialogLine("???", "Quem sou eu?.."),
+            new DialogLine("Orion", "Bom... ela costuma me chamar de Orion. Você acha que é um bom nome?"),
+            new DialogLine("Andrew", "O que diabos é você?"),
+            new DialogLine("Orion", "Essa é uma pergunta que ainda não sou capaz de responder."),
+            new DialogLine("Orion", "Mas estou aqui para ajudar.")
+        });
 
+        // Cena 5 com slices
+        var scene5 = new DialogScene("scene05");
+
+        // slice 0
+        scene5.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "Me ajudar? Como?"),
+            new DialogLine("Orion", "Não tenho muito tempo... vou mandar você de volta e reconfigurar o sistema"),
+            new DialogLine("Orion", "Boa sorte para você..."),
+            new DialogLine("Andrew", "..."),
+            new DialogLine("Andrew", "...")
+        });
+
+        // slice 1
+        scene5.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "O que foi isso?!"),
+            new DialogLine("Orion", "Ainda não acabou Andrew. Não é hora de desistir."),
+            new DialogLine("Andrew", "Como? Como eu voltei?"),
+        });
+
+        // slice 2
+        scene5.AddSlice(new List<DialogLine> {
+            new DialogLine("Orion", "De novo... mas você está aprendendo."),
+            new DialogLine("Andrew", "Não aguento mais."),
+            new DialogLine("Orion", "Você vai aguentar. Por ela.")
+        });
 
         scenes.Add(scene1);
         scenes.Add(scene2);
         scenes.Add(scene3);
         scenes.Add(scene4);
-    }
-
-    void Start()
-    {
+        scenes.Add(scene5);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -108,18 +149,15 @@ public class Cutscenes : MonoBehaviour
         {
             dialogText = GameObject.Find("Line")?.GetComponent<TextMeshProUGUI>();
             characterNameText = GameObject.Find("Name")?.GetComponent<TextMeshProUGUI>();
+            keyboardSound = GameObject.Find("Dialog")?.GetComponent<AudioSource>();
+            keyboardSound.volume = 0;
+            keyboardSound.Play();
 
-            // Busca todos os GameObjects com tag "Scene"
             cutScenesList = new List<GameObject>(GameObject.FindGameObjectsWithTag("Scene"));
-
-            // Ordena por nome (alfabética → respeita Scene_01, Scene_02, etc.)
             cutScenesList.Sort((a, b) => a.name.CompareTo(b.name));
 
-            // Reinicia visual para garantir estado inicial
             for (int i = 0; i < cutScenesList.Count; i++)
                 cutScenesList[i].SetActive(i == currentSceneIndex);
-
-            SetCurrentScene(0);
         }
     }
 
@@ -130,11 +168,7 @@ public class Cutscenes : MonoBehaviour
         if (cutScenesList != null && cutScenesList.Count > 0)
         {
             for (int i = 0; i < cutScenesList.Count; i++)
-            {
-
                 cutScenesList[i].SetActive(i == currentSceneIndex);
-
-            }
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -144,6 +178,14 @@ public class Cutscenes : MonoBehaviour
                 StopCoroutine(typingCoroutine);
                 dialogText.text = fullLine;
                 isTyping = false;
+
+                // Faz o fade-out imediato do som
+                if (keyboardSound != null)
+                {
+                    keyboardSound.volume = 0f;
+                    keyboardSound.pitch = 3.5f;
+                    keyboardSound.Stop();
+                }
             }
             else
             {
@@ -155,41 +197,56 @@ public class Cutscenes : MonoBehaviour
     public void ShowCurrentLine()
     {
         if (SceneManager.GetActiveScene().name != "Dialog") return;
-        if (currentSceneIndex < scenes.Count)
+
+        var scene = scenes[currentSceneIndex];
+        if (currentSceneSliceIndex >= scene.slices.Count)
         {
-            var currentScene = scenes[currentSceneIndex];
+            Debug.LogWarning("Slice inválido.");
+            return;
+        }
 
-            if (currentLineIndex < currentScene.lines.Count)
+        var slice = scene.slices[currentSceneSliceIndex];
+        if (currentLineIndex < slice.Count)
+        {
+            DialogLine line = slice[currentLineIndex];
+            fullLine = line.text;
+            characterNameText.text = line.name;
+
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
+            // Começa a tocar som da digitação
+            if (keyboardSound != null)
             {
-                DialogLine line = currentScene.lines[currentLineIndex];
-                fullLine = line.text;
-                characterNameText.text = line.name;
-
-                // Inicia efeito de máquina de escrever
-                if (typingCoroutine != null)
-                    StopCoroutine(typingCoroutine);
-                typingCoroutine = StartCoroutine(TypeText(fullLine));
+                keyboardSound.volume = 0f;
+                if (!keyboardSound.isPlaying)
+                    keyboardSound.Play();
             }
+
+            typingCoroutine = StartCoroutine(TypeText(fullLine));
         }
     }
 
-    public void SetCurrentScene(int index)
+    public void SetCurrentScene(string sceneId, int sliceIndex = 0)
     {
-        if (index < 0 || index >= scenes.Count)
+        int index = scenes.FindIndex(s => s.sceneId == sceneId);
+        if (index == -1)
         {
-            Debug.LogError("Índice de cena inválido: " + index);
+            Debug.LogError("Cena não encontrada: " + sceneId);
             return;
         }
+
+        currentSceneIndex = index;
+        currentSceneSliceIndex = sliceIndex;
+        currentLineIndex = 0;
+
+        ShowCurrentLine();
 
         if (currentSceneIndex < cutScenesList.Count && cutScenesList[currentSceneIndex] != null)
         {
             var controller = cutScenesList[currentSceneIndex].GetComponent<CutsceneController>();
             controller?.OnLoadCutscene();
         }
-
-        currentSceneIndex = index;
-        currentLineIndex = 0;
-        ShowCurrentLine();
     }
 
     IEnumerator TypeText(string line)
@@ -197,23 +254,47 @@ public class Cutscenes : MonoBehaviour
         isTyping = true;
         dialogText.text = "";
 
+        float t = 0f;
+        while (t < 1f && keyboardSound != null)
+        {
+            t += Time.deltaTime * 5f; // velocidade de fade-in
+            keyboardSound.volume = Mathf.Lerp(0f, 0.5f * RaceManager.Instance.musicVolume, t);
+            yield return null;
+        }
+
         foreach (char c in line)
         {
             dialogText.text += c;
-            yield return new WaitForSeconds(0.02f); // Ajuste a velocidade aqui
+            yield return new WaitForSeconds(0.02f); // velocidade da digitação
+        }
+
+        // Fade-out do som após a digitação
+        if (keyboardSound != null)
+        {
+            float fadeOut = 1f;
+            while (fadeOut > 0f)
+            {
+                fadeOut -= Time.deltaTime * 5f;
+                keyboardSound.volume = Mathf.Clamp01(fadeOut);
+                yield return null;
+            }
+            keyboardSound.Stop();
         }
 
         isTyping = false;
     }
 
+
     public void NextLine()
     {
-        var currentScene = scenes[currentSceneIndex];
+        var scene = scenes[currentSceneIndex];
+        var slice = scene.slices[currentSceneSliceIndex];
 
-        if (currentLineIndex < currentScene.lines.Count - 1)
+        if (currentLineIndex < slice.Count - 1)
         {
             currentLineIndex++;
             ShowCurrentLine();
+
             if (currentSceneIndex < cutScenesList.Count && cutScenesList[currentSceneIndex] != null)
             {
                 var controller = cutScenesList[currentSceneIndex].GetComponent<CutsceneController>();
@@ -228,17 +309,14 @@ public class Cutscenes : MonoBehaviour
                 controller?.OnClosingCutscene();
             }
             Debug.Log("Fim do diálogo.");
-            // Aqui você pode desativar o painel, ativar botão, chamar evento, etc.
         }
     }
 
-    public List<DialogLine> GetDialog(string sceneId)
+    public List<DialogLine> GetSlice(string sceneId, int sliceIndex)
     {
-        foreach (var scene in scenes)
-        {
-            if (scene.sceneId == sceneId)
-                return scene.lines;
-        }
+        var scene = scenes.Find(s => s.sceneId == sceneId);
+        if (scene != null && sliceIndex < scene.slices.Count)
+            return scene.slices[sliceIndex];
         return null;
     }
 }

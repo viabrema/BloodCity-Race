@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Cutscene04 : CutsceneController
+public class Cutscene05 : CutsceneController
 {
     public GameObject pose01;
     public GameObject pose02;
-    public GameObject pose03;
 
     public override void OnLoadCutscene()
     {
@@ -19,10 +18,9 @@ public class Cutscene04 : CutsceneController
             music.volume = RaceManager.Instance.musicVolume;
             music.Play();
         }
-        Debug.Log("Cena 04 carregada, tocando animação...");
+        Debug.Log("Cena 05 carregada, tocando animação...");
         pose01.SetActive(true);
-        pose02.SetActive(false);
-        pose03.SetActive(false);
+        pose02.SetActive(true);
     }
 
     public override void OnChangeDiaNextLine(int index)
@@ -33,28 +31,7 @@ public class Cutscene04 : CutsceneController
         {
             case 0:
                 pose01.SetActive(true);
-                pose02.SetActive(false);
-                pose03.SetActive(false);
-                break;
-            case 1:
-                pose01.SetActive(true);
-                pose02.SetActive(false);
-                pose03.SetActive(false);
-                break;
-            case 2:
-                pose01.SetActive(true);
-                pose02.SetActive(false);
-                pose03.SetActive(false);
-                break;
-            case 3:
-                pose01.SetActive(false);
                 pose02.SetActive(true);
-                pose03.SetActive(false);
-                break;
-            case 5:
-                pose01.SetActive(false);
-                pose02.SetActive(true);
-                pose03.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Linha de diálogo desconhecida: " + index);
@@ -63,7 +40,7 @@ public class Cutscene04 : CutsceneController
     }
     public override void OnClosingCutscene()
     {
-        Cutscenes.Instance.SetCurrentScene("scene05");
+        SceneManager.LoadScene("Race01"); // Carrega a cena da corrida
     }
 }
 
