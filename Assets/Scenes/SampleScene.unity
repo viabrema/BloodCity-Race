@@ -455,8 +455,10 @@ MonoBehaviour:
   scenes: []
   currentSceneIndex: 0
   currentLineIndex: 0
+  currentSceneSliceIndex: 0
   dialogText: {fileID: 0}
   characterNameText: {fileID: 0}
+  keyboardSound: {fileID: 0}
   cutScenesList: []
 --- !u!4 &176347132
 Transform:
@@ -505,12 +507,13 @@ MonoBehaviour:
   distanceTraveled: 0
   currentSpeed: 0
   deceleration: 10
-  totalRaceDistance: 500
+  totalRaceDistance: 5000
   collectedItem: 
   gameStopped: 0
   pulseTime: 0
   gameInitialized: 0
   startedRace: 0
+  attempts: 1
   nitroDuration: 1
   acceleration: 10
   maxSpeed: 50

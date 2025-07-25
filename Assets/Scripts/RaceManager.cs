@@ -17,6 +17,8 @@ public class RaceManager : MonoBehaviour
     public float pulseTime = 0f;
     public bool gameInitialized = false;
     public bool startedRace = false;
+    public float countdown = 5f;
+    public bool countdownRunning = false;
 
     public int attempts = 1;
 
@@ -43,6 +45,10 @@ public class RaceManager : MonoBehaviour
     public GameObject[] songs;
     public int selectedSongIndex = 0;
     public float musicVolume = 1f;
+
+    public AudioSource countdownAudioSource;
+    public AudioSource goAudioSource;
+
 
     void Awake()
     {
@@ -81,8 +87,21 @@ public class RaceManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+
+
         if (scene.name == "Race01")
         {
+            countdownAudioSource = GameObject.Find("CountdownSound")?.GetComponent<AudioSource>();
+            if (countdownAudioSource != null)
+            {
+                countdownAudioSource.volume = musicVolume;
+            }
+            goAudioSource = GameObject.Find("GoSound")?.GetComponent<AudioSource>();
+            if (goAudioSource != null)
+            {
+                goAudioSource.volume = musicVolume;
+            }
+            StartCountdown();
             createSongs();
             createOponents();
             PlayCurrentSong();
@@ -139,7 +158,10 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    void Start() { }
+    void Start()
+    {
+
+    }
 
     public void ShowUpgradeScreen()
     {
@@ -240,6 +262,14 @@ public class RaceManager : MonoBehaviour
         }
     }
 
+    public void StartCountdown()
+    {
+        countdown = 5f;
+        countdownRunning = true;
+    }
+
+    int lastLoggedCountdown = -1; // Variável para armazenar o último valor logado
+
     void Update()
     {
         if (SceneManager.GetActiveScene().name != "Race01") return;
@@ -270,12 +300,6 @@ public class RaceManager : MonoBehaviour
             PlayCurrentSong();
         }
 
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            if (!openedUpgradeScreen)
-                startedRace = true;
-        }
-
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             ResetRace();
@@ -285,6 +309,7 @@ public class RaceManager : MonoBehaviour
 
         if (distanceTraveled >= totalRaceDistance)
         {
+
             Debug.Log("Corrida finalizada!");
             ResetRace();
             SceneManager.LoadScene("Dialog");
@@ -301,13 +326,48 @@ public class RaceManager : MonoBehaviour
         }
 
         CalculeOpoentPositionByDistance();
+
+        if (countdownRunning && countdown > 0f)
+        {
+            countdown -= Time.deltaTime;
+
+            int currentCountdown = Mathf.CeilToInt(countdown);
+            if (currentCountdown != lastLoggedCountdown)
+            {
+                if (countdownAudioSource != null && currentCountdown > 0)
+                {
+                    countdownAudioSource.Play();
+
+                }
+
+                if (goAudioSource != null && currentCountdown == 0)
+                {
+                    goAudioSource.Play();
+
+                }
+
+                Debug.Log("Contagem: " + currentCountdown);
+                lastLoggedCountdown = currentCountdown;
+            }
+
+            if (countdown <= 0f)
+            {
+                countdown = 0f;
+                countdownRunning = false;
+                startedRace = true;
+                Debug.Log("Corrida iniciada!");
+                // Aqui você pode liberar o movimento do player ou ativar algum flag
+            }
+        }
     }
 
     public void ResetRace()
     {
+        countdownRunning = false;
         distanceTraveled = 0f;
         startedRace = false;
         currentSpeed = 0f;
+        countdown = 5f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

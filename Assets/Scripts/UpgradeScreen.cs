@@ -141,7 +141,7 @@ public class UpgradeScreen : MonoBehaviour
 
 
         RaceManager.Instance.HideUpgradeScreen();
-
+        RaceManager.Instance.StartCountdown();
 
     }
 

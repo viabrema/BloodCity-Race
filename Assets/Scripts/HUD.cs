@@ -11,6 +11,8 @@ public class HUDVelocity : MonoBehaviour
     public TextMeshProUGUI velocityText;
     public TextMeshProUGUI itemText;
 
+    public TextMeshProUGUI CountdownText; // Adiciona o campo para o texto de contagem regressiva
+
     [Header("Customização")]
     public Color playerColor = Color.white;
 
@@ -76,7 +78,17 @@ public class HUDVelocity : MonoBehaviour
 
         // Atualiza texto de velocidade
         int speed = Mathf.RoundToInt(RaceManager.Instance.currentSpeed);
-        velocityText.text = speed.ToString();
+        velocityText.text = Mathf.RoundToInt(speed * 2.2f).ToString();
+
+        if (RaceManager.Instance.countdownRunning)
+        {
+            // Atualiza texto de contagem regressiva
+            CountdownText.text = Mathf.CeilToInt(RaceManager.Instance.countdown).ToString();
+        }
+        else
+        {
+            CountdownText.text = "";
+        }
 
         // Atualiza item coletado
         if (!string.IsNullOrEmpty(RaceManager.Instance.collectedItem))
