@@ -19,6 +19,7 @@ public class RaceManager : MonoBehaviour
     public bool startedRace = false;
     public float countdown = 5f;
     public bool countdownRunning = false;
+    public bool win = false;
 
     public int attempts = 1;
 
@@ -101,13 +102,18 @@ public class RaceManager : MonoBehaviour
             {
                 goAudioSource.volume = musicVolume;
             }
-            StartCountdown();
             createSongs();
             createOponents();
             PlayCurrentSong();
         }
         else if (scene.name == "Dialog")
         {
+            if (win)
+            {
+                Cutscenes.Instance.SetCurrentScene("scene06");
+                return;
+            }
+
             if (attempts == 1)
             {
                 attempts++;
@@ -160,7 +166,7 @@ public class RaceManager : MonoBehaviour
 
     void Start()
     {
-
+        StartCountdown();
     }
 
     public void ShowUpgradeScreen()
@@ -309,8 +315,29 @@ public class RaceManager : MonoBehaviour
 
         if (distanceTraveled >= totalRaceDistance)
         {
+            // Recalcula posições antes de verificar
+            CalculeOpoentPositionByDistance();
 
-            Debug.Log("Corrida finalizada!");
+            // Se o jogador está na frente
+            List<(float distance, int index, bool isPlayer)> allDistances = new();
+            allDistances.Add((distanceTraveled, -1, true));
+            for (int i = 0; i < oponents.Length; i++)
+            {
+                allDistances.Add((oponents[i].distanceTraveled, i, false));
+            }
+            allDistances.Sort((a, b) => b.distance.CompareTo(a.distance));
+
+            if (allDistances[0].isPlayer)
+            {
+                win = true;
+                Debug.Log("Você venceu!");
+            }
+            else
+            {
+                win = false;
+                Debug.Log("Você perdeu!");
+            }
+
             ResetRace();
             SceneManager.LoadScene("Dialog");
             return;

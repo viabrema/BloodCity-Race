@@ -136,11 +136,25 @@ public class Cutscenes : MonoBehaviour
             new DialogLine("Orion", "Você vai aguentar. Por ela.")
         });
 
+
+        // Cena 6 com slices
+        var scene6 = new DialogScene("scene06");
+        scene6.AddSlice(new List<DialogLine> {
+            new DialogLine("Dr. Eron Dust", "Então você conseguiu o dinheiro. Não esperava por isso."),
+            new DialogLine("Dr. Eron Dust", "É uma pena, sua esposa já está em estado avançado da ligação neural."),
+            new DialogLine("Andrew", "O que? Como assim avançado?"),
+            new DialogLine("Dr. Eron Dust", "Digamos que a mente dela é muito mais compatível do que nós esperávamos."),
+            new DialogLine("Dr. Eron Dust", "Ela está praticamente toda conectada ao sistema."),
+            new DialogLine("Andrew", "Não... não pode ser!"),
+            new DialogLine("Dr. Eron Dust", "Se realmente quiser desconectá-la, acredito que ela não sobreviverá."),
+        });
+
         scenes.Add(scene1);
         scenes.Add(scene2);
         scenes.Add(scene3);
         scenes.Add(scene4);
         scenes.Add(scene5);
+        scenes.Add(scene6);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

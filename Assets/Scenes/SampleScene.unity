@@ -507,12 +507,14 @@ MonoBehaviour:
   distanceTraveled: 0
   currentSpeed: 0
   deceleration: 10
-  totalRaceDistance: 5000
+  totalRaceDistance: 3000
   collectedItem: 
   gameStopped: 0
   pulseTime: 0
   gameInitialized: 0
   startedRace: 0
+  countdown: 5
+  countdownRunning: 0
   attempts: 1
   nitroDuration: 1
   acceleration: 10
@@ -528,6 +530,8 @@ MonoBehaviour:
   songs: []
   selectedSongIndex: 0
   musicVolume: 1
+  countdownAudioSource: {fileID: 0}
+  goAudioSource: {fileID: 0}
 --- !u!4 &477438262
 Transform:
   m_ObjectHideFlags: 0
