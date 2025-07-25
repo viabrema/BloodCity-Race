@@ -149,12 +149,21 @@ public class Cutscenes : MonoBehaviour
             new DialogLine("Dr. Eron Dust", "Se realmente quiser desconectá-la, acredito que ela não sobreviverá."),
         });
 
+        var scene7 = new DialogScene("scene07");
+        scene7.AddSlice(new List<DialogLine> {
+            new DialogLine("Andrew", "Amor?"),
+            new DialogLine("Andrew", "Eu falei..."),
+            new DialogLine("Andrew", "Eu tentei de tudo, voltei, voltei e voltei até vencer... mas no fim..."),
+            new DialogLine("Andrew", "Eu não consegui te salvar."),
+        });
+
         scenes.Add(scene1);
         scenes.Add(scene2);
         scenes.Add(scene3);
         scenes.Add(scene4);
         scenes.Add(scene5);
         scenes.Add(scene6);
+        scenes.Add(scene7);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

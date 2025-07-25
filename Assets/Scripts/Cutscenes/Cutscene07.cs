@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Cutscene06 : CutsceneController
+public class Cutscene07 : CutsceneController
 {
     public GameObject pose01;
     public GameObject pose02;
+    public GameObject pose03;
 
     public override void OnLoadCutscene()
     {
@@ -21,6 +22,7 @@ public class Cutscene06 : CutsceneController
         Debug.Log("Cena 06 carregada, tocando animação...");
         pose01.SetActive(true);
         pose02.SetActive(true);
+        pose03.SetActive(true);
     }
 
     public override void OnChangeDiaNextLine(int index)
@@ -32,6 +34,7 @@ public class Cutscene06 : CutsceneController
             case 0:
                 pose01.SetActive(true);
                 pose02.SetActive(true);
+                pose03.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Linha de diálogo desconhecida: " + index);
@@ -40,7 +43,7 @@ public class Cutscene06 : CutsceneController
     }
     public override void OnClosingCutscene()
     {
-        Cutscenes.Instance.SetCurrentScene("scene07");
+        SceneManager.LoadScene("SampleScene"); // Volta para o menu inicial
     }
 }
 
