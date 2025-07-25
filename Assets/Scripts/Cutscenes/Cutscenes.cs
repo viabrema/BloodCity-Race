@@ -155,6 +155,22 @@ public class Cutscenes : MonoBehaviour
             new DialogLine("Andrew", "Eu falei..."),
             new DialogLine("Andrew", "Eu tentei de tudo, voltei, voltei e voltei até vencer... mas no fim..."),
             new DialogLine("Andrew", "Eu não consegui te salvar."),
+            new DialogLine("Orion", "Andrew?.."),
+            new DialogLine("Andrew", "Orion! O que você está fazendo aqui?"),
+            new DialogLine("Andrew", "Por que você não me avisou?"),
+            new DialogLine("Andrew", "Você sabia que não tinha como salvar ela e mesmo assim me fez voltar todas aquelas vezes?"),
+            new DialogLine("Orion", "Não é bem isso meu amor..."),
+            new DialogLine("Andrew", "O que?"),
+            new DialogLine("Orion", "Andrew, sou eu... é minha mente aqui dentro..."),
+            new DialogLine("Orion", "Ou pelo menos parte dela."),
+            new DialogLine("Andrew", "Como? como isso é possível?"),
+            new DialogLine("Orion", "Não te contei antes por medo de você desistir de mim."),
+            new DialogLine("Orion", "Eu preciso de um favor seu."),
+            new DialogLine("Orion", "Preciso que você me desconecte."),
+            new DialogLine("Andrew", "Mas... mas você vai morrer!"),
+            new DialogLine("Orion", "Eu já morri Andrew... minha mente está fragmentada e meu corpo não funciona mais."),
+            new DialogLine("Orion", "Acha justo me deixar presa aqui para sempre?"),
+
         });
 
         scenes.Add(scene1);

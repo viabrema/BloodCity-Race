@@ -10,6 +10,7 @@ public class Cutscene07 : CutsceneController
     public GameObject pose01;
     public GameObject pose02;
     public GameObject pose03;
+    public GameObject pose04;
 
     public override void OnLoadCutscene()
     {
@@ -23,6 +24,7 @@ public class Cutscene07 : CutsceneController
         pose01.SetActive(true);
         pose02.SetActive(true);
         pose03.SetActive(true);
+        pose04.SetActive(false);
     }
 
     public override void OnChangeDiaNextLine(int index)
@@ -31,10 +33,8 @@ public class Cutscene07 : CutsceneController
         // Aqui você pode ativar/desativar poses ou animações específicas
         switch (index)
         {
-            case 0:
-                pose01.SetActive(true);
-                pose02.SetActive(true);
-                pose03.SetActive(true);
+            case 5:
+                pose04.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Linha de diálogo desconhecida: " + index);
