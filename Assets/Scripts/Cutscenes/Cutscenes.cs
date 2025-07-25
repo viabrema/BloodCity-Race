@@ -68,15 +68,20 @@ public class Cutscenes : MonoBehaviour
 
         // Cena 1
         var scene1 = new DialogScene("scene01");
-        scene1.lines.Add(new DialogLine("Funcionário", "Você fracassou. Sem pagamento, sem liberação."));
-        scene1.lines.Add(new DialogLine("Protagonista", "Eu não vou parar. Ela ainda está viva."));
-        scene1.lines.Add(new DialogLine("Funcionário", "Então continue correndo. A FaithLab agradece."));
+        scene1.lines.Add(new DialogLine("Andrew", "Idiota! Como você consegue ser tão idiota Andrew?"));
+        scene1.lines.Add(new DialogLine("Andrew", "Sem o dinheiro da corrida, como vamos pagar a Faithlab?"));
+        scene1.lines.Add(new DialogLine("Andrew", "Como vamos tirar ela daquele lugar?"));
+        scene1.lines.Add(new DialogLine("Andrew", "..."));
+        scene1.lines.Add(new DialogLine("Andrew", "..."));
 
         // Cena 2
         var scene2 = new DialogScene("scene02");
-        scene2.lines.Add(new DialogLine("Funcionário", "Você de novo? Isso está ficando cansativo."));
-        scene2.lines.Add(new DialogLine("Protagonista", "Vocês não vão apagar a mente dela."));
-        scene2.lines.Add(new DialogLine("Funcionário", "Ela já é parte do sistema. E você, uma variável irrelevante."));
+        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Você fracassou. Sem pagamento, sem liberação."));
+        scene2.lines.Add(new DialogLine("Andrew", "Como vocês podem fazer isso com ela? Ela não é um animal de laboratório!"));
+        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Vocês assinaram um contrato, não fizeram o pagamento. A cláusula é clara."));
+        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Até você pagar podemos fazer o que quisermos com ela."));
+        scene2.lines.Add(new DialogLine("Andrew", "Seu cretino! Ela é uma pessoa!"));
+
 
         scenes.Add(scene1);
         scenes.Add(scene2);
@@ -193,6 +198,7 @@ public class Cutscenes : MonoBehaviour
         {
             currentLineIndex++;
             ShowCurrentLine();
+            cutScenesList[currentSceneIndex].GetComponent<CutsceneController>()?.OnChangeDialogLine(currentLineIndex);
         }
         else
         {

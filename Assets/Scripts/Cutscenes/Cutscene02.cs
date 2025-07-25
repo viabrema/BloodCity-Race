@@ -13,6 +13,13 @@ public class Cutscene02 : CutsceneController
         // StartCoroutine, animador, etc.
     }
 
+    public override void OnChangeDialogLine(int index)
+    {
+        Debug.Log("Mudando linha de diálogo para: " + index);
+        // Aqui você pode ativar/desativar poses ou animações específicas
+        // Exemplo: Ativar uma pose específica com base no índice
+        // switch (index) { ... }
+    }
     public override void OnClosingCutscene()
     {
         SceneManager.LoadScene("Race01"); // Carrega a cena da corrida
