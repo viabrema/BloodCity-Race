@@ -89,7 +89,7 @@ public class Cutscenes : MonoBehaviour
         scene4.lines.Add(new DialogLine("Andrew", "O que fazer agora? Desistir?"));
         scene4.lines.Add(new DialogLine("Andrew", "Merda! Me sinto tão impotente quanto uma criança."));
         scene4.lines.Add(new DialogLine("????", "Andrew..."));
-        scene4.lines.Add(new DialogLine("", "..."));
+        scene4.lines.Add(new DialogLine("Andrew", "..."));
 
 
         scenes.Add(scene1);

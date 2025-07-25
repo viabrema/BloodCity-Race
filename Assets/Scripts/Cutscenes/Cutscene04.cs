@@ -9,6 +9,7 @@ public class Cutscene04 : CutsceneController
 {
     public GameObject pose01;
     public GameObject pose02;
+
     public override void OnLoadCutscene()
     {
         AudioSource music = GameObject.Find("Tension01")?.GetComponent<AudioSource>();
@@ -17,8 +18,8 @@ public class Cutscene04 : CutsceneController
             music.volume = RaceManager.Instance.musicVolume;
             music.Play();
         }
-        Debug.Log("Cena 02 carregada, tocando animação...");
-        pose01.SetActive(true);
+        Debug.Log("Cena 04 carregada, tocando animação...");
+        pose01.SetActive(false);
         pose02.SetActive(false);
     }
 

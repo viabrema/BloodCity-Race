@@ -15,7 +15,7 @@ public class Cutscene03 : CutsceneController
             music.volume = RaceManager.Instance.musicVolume;
             music.Play();
         }
-        Debug.Log("Cena 02 carregada, tocando animação...");
+        Debug.Log("Cena 03 carregada, tocando animação...");
         // StartCoroutine, animador, etc.
     }
 
