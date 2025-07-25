@@ -59,7 +59,7 @@ public class Cutscene01 : CutsceneController
     public override void OnClosingCutscene()
     {
         Debug.Log("Cena 01 encerrando");
-        Cutscenes.Instance.SetCurrentScene(1);
+        Cutscenes.Instance.SetCurrentScene("scene02");
         // SceneManager.LoadScene("Corrida"); ou ativa HUD etc.
     }
 }

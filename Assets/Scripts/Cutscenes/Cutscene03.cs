@@ -28,7 +28,7 @@ public class Cutscene03 : CutsceneController
     }
     public override void OnClosingCutscene()
     {
-        Cutscenes.Instance.SetCurrentScene(3);
+        Cutscenes.Instance.SetCurrentScene("scene04");
     }
 }
 

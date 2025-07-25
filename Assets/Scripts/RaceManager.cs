@@ -18,6 +18,8 @@ public class RaceManager : MonoBehaviour
     public bool gameInitialized = false;
     public bool startedRace = false;
 
+    public int attempts = 1;
+
     [Header("Upgrades")]
     public float nitroDuration = 1f;
     public float acceleration = 10f;
@@ -79,9 +81,31 @@ public class RaceManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        createSongs();
-        createOponents();
-        PlayCurrentSong();
+        if (scene.name == "Race01")
+        {
+            createSongs();
+            createOponents();
+            PlayCurrentSong();
+        }
+        else if (scene.name == "Dialog")
+        {
+            if (attempts == 1)
+            {
+                attempts++;
+                Cutscenes.Instance.SetCurrentScene("scene01");
+            }
+            else if (attempts == 2)
+            {
+                attempts++;
+                Cutscenes.Instance.SetCurrentScene("scene05", 1);
+            }
+            else if (attempts > 2)
+            {
+                attempts++;
+                Cutscenes.Instance.SetCurrentScene("scene05", 2);
+            }
+        }
+
     }
 
     public void UpgradeScreenStarted()
@@ -264,7 +288,6 @@ public class RaceManager : MonoBehaviour
             Debug.Log("Corrida finalizada!");
             ResetRace();
             SceneManager.LoadScene("Dialog");
-            Cutscenes.Instance.SetCurrentScene(0);
             return;
         }
 
