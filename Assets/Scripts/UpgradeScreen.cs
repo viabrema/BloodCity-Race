@@ -50,14 +50,14 @@ public class UpgradeScreen : MonoBehaviour
         pulseUpgrades = new List<pulseUpgrade>();
 
         // Exemplo de adição de upgrades
-        motorUpgrades.Add(new MotorUpgrade { name = "Turbo", description = "Aumenta a velocidade máxima em 10%.", type = "maxSpeed" });
-        motorUpgrades.Add(new MotorUpgrade { name = "Aceleração", description = "Aumenta a aceleração em +1.", type = "acceleration" });
-        motorUpgrades.Add(new MotorUpgrade { name = "Drift", description = "Aumenta o controle de direção.", type = "verticalSpeed" });
-        nitroUpgrades.Add(new nitroUpgrade { name = "Carga do Nitro", description = "Aumenta a duração do nitro em 1 segundo.", type = "nitroDuration" });
-        nitroUpgrades.Add(new nitroUpgrade { name = "Boost", description = "Aumenta o impulso do nitro em 10%.", type = "nitroBoost" });
-        nitroUpgrades.Add(new nitroUpgrade { name = "Frequência do Nitro", description = "Aumenta a frequência de aparecimento do nitro.", type = "nitroFrequency" });
-        pulseUpgrades.Add(new pulseUpgrade { name = "Duração do Pulso", description = "Aumenta a duração do pulso em 1 segundo.", type = "pulseDurability" });
-        pulseUpgrades.Add(new pulseUpgrade { name = "Frequência do Pulso", description = "Aumenta a frequência de aparecimento do pulso.", type = "pulseFrequency" });
+        motorUpgrades.Add(new MotorUpgrade { name = "Turbo", description = "Aumenta a velocidade máxima", type = "maxSpeed" });
+        motorUpgrades.Add(new MotorUpgrade { name = "Aceleração", description = "Aumenta a aceleração", type = "acceleration" });
+        motorUpgrades.Add(new MotorUpgrade { name = "Drift", description = "Melhora o controle durante curvas", type = "verticalSpeed" });
+        nitroUpgrades.Add(new nitroUpgrade { name = "Carga do Nitro", description = "Aumenta a duração do nitro", type = "nitroDuration" });
+        nitroUpgrades.Add(new nitroUpgrade { name = "Boost", description = "Aumenta o impulso do nitro", type = "nitroBoost" });
+        nitroUpgrades.Add(new nitroUpgrade { name = "Frequência do Nitro", description = "Aumenta a chance da nitro aparecer", type = "nitroFrequency" });
+        pulseUpgrades.Add(new pulseUpgrade { name = "Duração da Descarga", description = "Aumenta a duração da descarga elétrica", type = "pulseDurability" });
+        pulseUpgrades.Add(new pulseUpgrade { name = "Frequência da Descarga", description = "Aumenta a chance da descarga elétrica aparecer", type = "pulseFrequency" });
 
         // Exibe os upgrades iniciais
         RandomizeUpgrades();

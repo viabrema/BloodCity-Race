@@ -124,10 +124,15 @@ public class RaceManager : MonoBehaviour
                 attempts++;
                 Cutscenes.Instance.SetCurrentScene("scene05", 1);
             }
-            else if (attempts > 2)
+            else if (attempts == 3)
             {
                 attempts++;
                 Cutscenes.Instance.SetCurrentScene("scene05", 2);
+            }
+            else if (attempts > 3)
+            {
+                attempts++;
+                Cutscenes.Instance.SetCurrentScene("scene05", 3);
             }
         }
 

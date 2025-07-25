@@ -26,17 +26,17 @@ public class MotorUpgrade
     }
     public void addMaxSpeed()
     {
-        RaceManager.Instance.maxSpeed *= 1.1f;
+        RaceManager.Instance.maxSpeed *= 1.03f;
     }
 
     public void addAcceleration()
     {
-        RaceManager.Instance.acceleration += 1f;
+        RaceManager.Instance.acceleration += 3f;
     }
 
     public void addVerticalSpeed()
     {
-        RaceManager.Instance.verticalSpeed += 1f;
+        RaceManager.Instance.verticalSpeed += 3f;
     }
 }
 

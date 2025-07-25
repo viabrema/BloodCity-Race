@@ -127,13 +127,19 @@ public class Cutscenes : MonoBehaviour
             new DialogLine("Andrew", "O que foi isso?!"),
             new DialogLine("Orion", "Ainda não acabou Andrew. Não é hora de desistir."),
             new DialogLine("Andrew", "Como? Como eu voltei?"),
+            new DialogLine("Orion", "Isso não importa no momento, o importante é tentar de novo."),
         });
 
         // slice 2
         scene5.AddSlice(new List<DialogLine> {
             new DialogLine("Orion", "De novo... mas você está aprendendo."),
             new DialogLine("Andrew", "Não aguento mais."),
-            new DialogLine("Orion", "Você vai aguentar. Por ela.")
+            new DialogLine("Orion", "Você vai aguentar. Por ela...")
+        });
+
+        // slice 3
+        scene5.AddSlice(new List<DialogLine> {
+            new DialogLine("Orion", "Estamos quase lá Andrew, só mais uma corrida."),
         });
 
 

@@ -126,10 +126,14 @@ public class PlayerController : MonoBehaviour
                 ParticleSystem pulseEffect = pulse.GetComponent<ParticleSystem>();
                 pulseEffect.Clear();
                 pulseEffect.Play();
+
                 AudioSource audio = pulse.GetComponent<AudioSource>();
                 audio.volume = RaceManager.Instance.musicVolume * 0.5f;
                 audio.Play();
-                RaceManager.Instance.collectedItem = ""; // Limpa o item após uso
+
+                ApplyGravityToObstacles(); // <- Aqui
+
+                RaceManager.Instance.collectedItem = "";
                 StartCoroutine(DelayedPulseTime());
             }
             else if (RaceManager.Instance.collectedItem == "shield")
@@ -150,6 +154,21 @@ public class PlayerController : MonoBehaviour
                 RaceManager.Instance.maxSpeed,
                 RaceManager.Instance.deceleration * Time.deltaTime * 2f
             );
+        }
+    }
+
+    void ApplyGravityToObstacles()
+    {
+        GameObject[] obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+
+        foreach (GameObject obj in obstacles)
+        {
+            Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.bodyType = RigidbodyType2D.Dynamic;
+                rb.gravityScale = 1.5f; // Ajuste conforme o quanto você quer que eles "caiam"
+            }
         }
     }
 

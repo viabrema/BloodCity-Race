@@ -15,6 +15,7 @@ public class ObstacleData
 public class ObstacleExtraData
 {
     public float baseSpeed;
+    public bool isStatic;
 }
 
 public class ObstacleSpawner : MonoBehaviour
@@ -91,6 +92,7 @@ public class ObstacleSpawner : MonoBehaviour
         if (obstacleScript != null && data.data != null)
         {
             obstacleScript.baseSpeed = data.data.baseSpeed;
+            obstacleScript.isStatic = data.data.isStatic;
         }
     }
 
