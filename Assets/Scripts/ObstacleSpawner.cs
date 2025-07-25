@@ -26,6 +26,9 @@ public class ObstacleSpawner : MonoBehaviour
     private List<ObstacleData> obstacleList = new List<ObstacleData>();
     private int nextObstacleIndex = 0;
 
+    private float nextDroneCheck = 100f;
+    private float droneCheckStep = 200f;
+
     void Start()
     {
         LoadObstacleData();
@@ -34,14 +37,24 @@ public class ObstacleSpawner : MonoBehaviour
     void Update()
     {
         if (RaceManager.Instance == null || RaceManager.Instance.gameStopped) return;
-        if (nextObstacleIndex >= obstacleList.Count) return;
 
-        var current = obstacleList[nextObstacleIndex];
-
-        if (RaceManager.Instance.distanceTraveled >= current.distance)
+        // Spawna obstáculos pré-definidos
+        if (nextObstacleIndex < obstacleList.Count)
         {
-            SpawnObstacle(current);
-            nextObstacleIndex++;
+            var current = obstacleList[nextObstacleIndex];
+
+            if (RaceManager.Instance.distanceTraveled >= current.distance)
+            {
+                SpawnObstacle(current);
+                nextObstacleIndex++;
+            }
+        }
+
+        // Spawna drones com base em frequência e distância
+        if (RaceManager.Instance.distanceTraveled >= nextDroneCheck)
+        {
+            TrySpawnDrones();
+            nextDroneCheck += droneCheckStep;
         }
     }
 
@@ -79,5 +92,36 @@ public class ObstacleSpawner : MonoBehaviour
         {
             obstacleScript.baseSpeed = data.data.baseSpeed;
         }
+    }
+
+    void TrySpawnDrones()
+    {
+        float x = Camera.main.transform.position.x + spawnOffset;
+
+        if (Random.value <= RaceManager.Instance.nitroFrequency)
+        {
+            float yBase = Random.Range(-3f, 3f); // ajuste conforme necessário
+            SpawnDrone("DroneNitro", x, yBase + 1f);
+        }
+
+        if (Random.value <= RaceManager.Instance.pulseFrequency)
+        {
+            float yBase = Random.Range(-3f, 3f); // ajuste conforme necessário
+
+            SpawnDrone("DronePulse", x, yBase - 1f);
+        }
+    }
+
+    void SpawnDrone(string prefabName, float x, float y)
+    {
+        GameObject prefab = Resources.Load<GameObject>("Prefab/" + prefabName);
+        if (prefab == null)
+        {
+            Debug.LogError($"Prefab '{prefabName}' não encontrado.");
+            return;
+        }
+
+        Vector3 spawnPos = new Vector3(x, y, 0f);
+        Instantiate(prefab, spawnPos, Quaternion.identity, obstacleParent);
     }
 }
