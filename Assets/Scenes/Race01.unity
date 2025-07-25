@@ -328,7 +328,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: maxSpeed
-      value: 60
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: pointColor.b
@@ -564,6 +564,7 @@ MonoBehaviour:
   startedRace: 0
   countdown: 5
   countdownRunning: 0
+  win: 0
   attempts: 1
   nitroDuration: 1
   acceleration: 10
@@ -580,6 +581,7 @@ MonoBehaviour:
   selectedSongIndex: 0
   musicVolume: 1
   countdownAudioSource: {fileID: 0}
+  goAudioSource: {fileID: 0}
 --- !u!4 &571248222
 Transform:
   m_ObjectHideFlags: 0
@@ -763,7 +765,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: maxSpeed
-      value: 45
+      value: 62
       objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: pointColor.b
@@ -4134,6 +4136,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1062869088}
     m_Modifications:
+    - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
+      propertyPath: maxSpeed
+      value: 55
+      objectReference: {fileID: 0}
     - target: {fileID: 48005304150507033, guid: 778e49e11fbb3054a8bb4f47d9886f8b, type: 3}
       propertyPath: pointColor.b
       value: 0.25490198

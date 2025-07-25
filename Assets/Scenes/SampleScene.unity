@@ -507,7 +507,7 @@ MonoBehaviour:
   distanceTraveled: 0
   currentSpeed: 0
   deceleration: 10
-  totalRaceDistance: 500
+  totalRaceDistance: 5000
   collectedItem: 
   gameStopped: 0
   pulseTime: 0
@@ -519,7 +519,7 @@ MonoBehaviour:
   attempts: 1
   nitroDuration: 1
   acceleration: 10
-  maxSpeed: 100
+  maxSpeed: 50
   nitroBoost: 20
   verticalSpeed: 5
   maxPulseTime: 1

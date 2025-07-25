@@ -170,7 +170,13 @@ public class Cutscenes : MonoBehaviour
             new DialogLine("Andrew", "Mas... mas você vai morrer!"),
             new DialogLine("Orion", "Eu já morri Andrew... minha mente está fragmentada e meu corpo não funciona mais."),
             new DialogLine("Orion", "Acha justo me deixar presa aqui para sempre?"),
+            new DialogLine("Andrew", ""),
 
+        });
+
+        var scene8 = new DialogScene("scene08");
+        scene8.AddSlice(new List<DialogLine> {
+            new DialogLine("", ""),
         });
 
         scenes.Add(scene1);
@@ -180,6 +186,7 @@ public class Cutscenes : MonoBehaviour
         scenes.Add(scene5);
         scenes.Add(scene6);
         scenes.Add(scene7);
+        scenes.Add(scene8);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
