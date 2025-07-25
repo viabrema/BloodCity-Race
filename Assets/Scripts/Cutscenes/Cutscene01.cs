@@ -9,14 +9,21 @@ public class Cutscene01 : CutsceneController
     public GameObject pose01;
     public GameObject pose02;
     public GameObject pose03;
-    public GameObject pose04;
     public override void OnLoadCutscene()
     {
+        AudioSource music = GameObject.Find("Tension01")?.GetComponent<AudioSource>();
+        if (music != null && !music.isPlaying)
+        {
+            music.volume = RaceManager.Instance.musicVolume;
+            music.Play();
+        }
         Debug.Log("Cena 01 carregada, tocando animação...");
-        // StartCoroutine, animador, etc.
+        pose01.SetActive(true);
+        pose02.SetActive(false);
+        pose03.SetActive(false);
     }
 
-    public override void OnChangeDialogLine(int index)
+    public override void OnChangeDiaNextLine(int index)
     {
         Debug.Log("Mudando linha de diálogo para: " + index);
         // Aqui você pode ativar/desativar poses ou animações específicas
@@ -26,25 +33,22 @@ public class Cutscene01 : CutsceneController
                 pose01.SetActive(true);
                 pose02.SetActive(false);
                 pose03.SetActive(false);
-                pose04.SetActive(false);
                 break;
             case 1:
                 pose01.SetActive(false);
                 pose02.SetActive(true);
                 pose03.SetActive(false);
-                pose04.SetActive(false);
                 break;
             case 2:
                 pose01.SetActive(false);
                 pose02.SetActive(false);
                 pose03.SetActive(true);
-                pose04.SetActive(false);
                 break;
             case 3:
                 pose01.SetActive(false);
                 pose02.SetActive(false);
                 pose03.SetActive(false);
-                pose04.SetActive(true);
+
                 break;
             default:
                 Debug.LogWarning("Linha de diálogo desconhecida: " + index);

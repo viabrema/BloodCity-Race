@@ -1,20 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Collections.Generic; // Necessário para List<>
-using UnityEditor;
+using System.Collections.Generic;
+
 public class RaceManager : MonoBehaviour
 {
     public static RaceManager Instance;
-
-    // public Transform playerTransform;
 
     [Header("Configurações de Corrida")]
     public float distanceTraveled = 0f;
     public float currentSpeed = 0f;
     public float deceleration = 10f;
     public float totalRaceDistance = 5000f;
-    public string collectedItem = ""; // Guarda o tipo de item coletado (ex: "Nitro", "Shot", etc.)
+    public string collectedItem = "";
     public bool gameStopped = false;
     public float pulseTime = 0f;
     public bool gameInitialized = false;
@@ -26,14 +24,13 @@ public class RaceManager : MonoBehaviour
     public float maxSpeed = 50f;
     public float nitroBoost = 20f;
     public float verticalSpeed = 5f;
-    public int maxPulseTime = 1; // Tempo máximo de efeito do pulso
+    public int maxPulseTime = 1;
     public int durability = 100;
-    public float nitroFrequency = 0.05f; // Frequência que a maleta de nitro aparece
-    public float pulseFrequency = 0.01f; // Frequência que a maleta de pulso aparece
+    public float nitroFrequency = 0.05f;
+    public float pulseFrequency = 0.01f;
 
     [Header("Oponentes")]
     public Oponent[] oponents;
-
     public static event System.Action OnOponentsReady;
 
     [Header("Screens")]
@@ -41,11 +38,8 @@ public class RaceManager : MonoBehaviour
     private bool openedUpgradeScreen = false;
 
     [Header("Sons")]
-
     public GameObject[] songs;
-
     public int selectedSongIndex = 0;
-
     public float musicVolume = 1f;
 
     void Awake()
@@ -53,12 +47,12 @@ public class RaceManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // persiste entre cenas
-            SceneManager.sceneLoaded += OnSceneLoaded; // Registra o evento
+            DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
-            Destroy(gameObject); // garante que só um exista
+            Destroy(gameObject);
         }
     }
 
@@ -66,35 +60,28 @@ public class RaceManager : MonoBehaviour
     {
         if (Instance == this)
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded; // Desregistra o evento
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 
     public void ChangeVolume(float volume)
     {
-        Debug.Log("Mudando volume da música para: " + volume);
         musicVolume = volume;
-        foreach (var song in songs)
+        for (int i = 0; i < songs.Length; i++)
         {
-            if (song != null)
+            AudioSource audioSource = songs[i].GetComponent<AudioSource>();
+            if (audioSource != null)
             {
-                AudioSource audioSource = song.GetComponent<AudioSource>();
-                if (audioSource != null)
-                {
-                    audioSource.volume = musicVolume;
-                }
+                audioSource.volume = (i == selectedSongIndex) ? musicVolume : 0f;
             }
         }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Cena Carregada: " + scene.name);
         createSongs();
-        createOponents(); // Garante que os oponentes sejam criados após o carregamento da cena
-        // selectedSongIndex = (selectedSongIndex + 1) % songs.Length;
+        createOponents();
         PlayCurrentSong();
-
     }
 
     public void UpgradeScreenStarted()
@@ -104,7 +91,6 @@ public class RaceManager : MonoBehaviour
         {
             HideUpgradeScreen();
             gameInitialized = true;
-
         }
         else
         {
@@ -116,34 +102,20 @@ public class RaceManager : MonoBehaviour
     {
         if (songs.Length == 0) return;
 
-        // Para todas as músicas
-        foreach (var song in songs)
+        for (int i = 0; i < songs.Length; i++)
         {
-            if (song != null)
+            AudioSource audioSource = songs[i].GetComponent<AudioSource>();
+            if (audioSource != null)
             {
-                AudioSource audioSource = song.GetComponent<AudioSource>();
-                if (audioSource != null)
-                {
-                    audioSource.Stop();
-                }
-            }
-        }
+                if (!audioSource.isPlaying)
+                    audioSource.Play();
 
-        // Toca a música selecionada
-        if (selectedSongIndex < songs.Length && songs[selectedSongIndex] != null)
-        {
-            AudioSource selectedAudio = songs[selectedSongIndex].GetComponent<AudioSource>();
-            if (selectedAudio != null)
-            {
-                selectedAudio.Play();
+                audioSource.volume = (i == selectedSongIndex) ? musicVolume : 0f;
             }
         }
     }
 
-    void Start()
-    {
-
-    }
+    void Start() { }
 
     public void ShowUpgradeScreen()
     {
@@ -152,10 +124,6 @@ public class RaceManager : MonoBehaviour
             upgradeScreen.SetActive(true);
             upgradeScreen.GetComponent<UpgradeScreen>().RandomizeUpgrades();
         }
-        else
-        {
-            Debug.LogWarning("Upgrade Screen not found!");
-        }
     }
 
     public void HideUpgradeScreen()
@@ -163,11 +131,6 @@ public class RaceManager : MonoBehaviour
         if (upgradeScreen != null)
         {
             upgradeScreen.SetActive(false);
-
-        }
-        else
-        {
-            Debug.LogWarning("Upgrade Screen not found!");
         }
     }
 
@@ -184,22 +147,18 @@ public class RaceManager : MonoBehaviour
     void createSongs()
     {
         if (SceneManager.GetActiveScene().name != "Race01") return;
-        //busca pela tag "Music"
         songs = GameObject.FindGameObjectsWithTag("Music");
-        if (songs.Length > 0)
+        foreach (var song in songs)
         {
-            foreach (var song in songs)
+            AudioSource audioSource = song.GetComponent<AudioSource>();
+            if (audioSource != null)
             {
-                AudioSource audioSource = song.GetComponent<AudioSource>();
-                if (audioSource != null)
-                {
-                    audioSource.volume = musicVolume;
-                }
+                audioSource.loop = true;
+                if (!audioSource.isPlaying)
+                    audioSource.Play();
+
+                audioSource.volume = 0f;
             }
-        }
-        if (songs.Length == 0)
-        {
-            Debug.LogWarning("Nenhum AudioSource encontrado na cena!");
         }
     }
 
@@ -230,43 +189,37 @@ public class RaceManager : MonoBehaviour
     {
         if (oponents == null || oponents.Length == 0) return;
 
-        // Cria uma lista com as distâncias percorridas por todos (player e oponentes)
-        List<(float distance, int index, bool isPlayer)> allDistances = new List<(float, int, bool)>();
+        List<(float distance, int index, bool isPlayer)> allDistances = new();
 
-        // Adiciona a distância do player
-        allDistances.Add((distanceTraveled, -1, true)); // -1 para identificar o player
-
-        // Adiciona as distâncias dos oponentes
+        allDistances.Add((distanceTraveled, -1, true));
         for (int i = 0; i < oponents.Length; i++)
         {
             allDistances.Add((oponents[i].distanceTraveled, i, false));
         }
 
-        // Ordena pela distância em ordem decrescente
         allDistances.Sort((a, b) => b.distance.CompareTo(a.distance));
 
-        // Atualiza a posição dos oponentes
         for (int i = 0; i < allDistances.Count; i++)
         {
             if (!allDistances[i].isPlayer)
             {
                 int opponentIndex = allDistances[i].index;
                 Position position = oponents[opponentIndex].GetComponentInChildren<Position>();
-                position.SetPosition(i); // Define a posição do oponente
+                position.SetPosition(i);
             }
             else
             {
                 GameObject player = GameObject.FindGameObjectWithTag("Player");
                 Position position = player.GetComponentInChildren<Position>();
-                position.SetPosition(i); // Define a posição do jogador
+                position.SetPosition(i);
             }
-
         }
     }
 
     void Update()
     {
         if (SceneManager.GetActiveScene().name != "Race01") return;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             gameStopped = !gameStopped;
@@ -277,16 +230,11 @@ public class RaceManager : MonoBehaviour
         {
             openedUpgradeScreen = !openedUpgradeScreen;
             if (openedUpgradeScreen)
-            {
                 ShowUpgradeScreen();
-            }
             else
-            {
                 HideUpgradeScreen();
-            }
         }
 
-        // "q" e "e" trocam a de música
         if (Input.GetKeyDown(KeyCode.Q))
         {
             selectedSongIndex = (selectedSongIndex - 1 + songs.Length) % songs.Length;
@@ -298,11 +246,10 @@ public class RaceManager : MonoBehaviour
             PlayCurrentSong();
         }
 
-        // ========== CONTROLE DE INÍCIO E REINÍCIO ==========
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            if (openedUpgradeScreen) return;
-            startedRace = true;
+            if (!openedUpgradeScreen)
+                startedRace = true;
         }
 
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -310,15 +257,14 @@ public class RaceManager : MonoBehaviour
             ResetRace();
         }
 
-
-        if (gameStopped) return; // Não atualiza enquanto o jogo está pausado
+        if (gameStopped) return;
 
         if (distanceTraveled >= totalRaceDistance)
         {
             Debug.Log("Corrida finalizada!");
             ResetRace();
-            SceneManager.LoadScene("Dialog"); // Carrega a cena de diálogo ou finalização
-            Cutscenes.Instance.SetCurrentScene(0); // Avança para a próxima cena de cutscene
+            SceneManager.LoadScene("Dialog");
+            Cutscenes.Instance.SetCurrentScene(0);
             return;
         }
 

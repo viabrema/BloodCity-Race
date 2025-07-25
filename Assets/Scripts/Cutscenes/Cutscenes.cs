@@ -46,7 +46,6 @@ public class Cutscenes : MonoBehaviour
     private bool isTyping = false;
     private Coroutine typingCoroutine;
     private string fullLine = "";
-
     public List<GameObject> cutScenesList;
 
     void Awake()
@@ -72,19 +71,31 @@ public class Cutscenes : MonoBehaviour
         scene1.lines.Add(new DialogLine("Andrew", "Sem o dinheiro da corrida, como vamos pagar a Faithlab?"));
         scene1.lines.Add(new DialogLine("Andrew", "Como vamos tirar ela daquele lugar?"));
         scene1.lines.Add(new DialogLine("Andrew", "..."));
-        scene1.lines.Add(new DialogLine("Andrew", "..."));
 
         // Cena 2
         var scene2 = new DialogScene("scene02");
-        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Você fracassou. Sem pagamento, sem liberação."));
-        scene2.lines.Add(new DialogLine("Andrew", "Como vocês podem fazer isso com ela? Ela não é um animal de laboratório!"));
-        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Vocês assinaram um contrato, não fizeram o pagamento. A cláusula é clara."));
-        scene2.lines.Add(new DialogLine("Dr. Eron Dust", "Até você pagar podemos fazer o que quisermos com ela."));
-        scene2.lines.Add(new DialogLine("Andrew", "Seu cretino! Ela é uma pessoa!"));
+        scene2.lines.Add(new DialogLine("Andrew", "Lá está ela, o grande símbolo do império capitalista. A Faithlab."));
+        scene2.lines.Add(new DialogLine("Andrew", "Como eu pude assinar aquele contrato?"));
+        scene2.lines.Add(new DialogLine("Andrew", "Mas o que mais eu podia fazer? Era a única forma de salvá-la."));
+
+        var scene3 = new DialogScene("scene03");
+        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Você fracassou. Sem pagamento, sem liberação."));
+        scene3.lines.Add(new DialogLine("Andrew", "Como vocês podem fazer isso com ela? Ela não é um animal de laboratório!"));
+        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Vocês assinaram um contrato, não fizeram o pagamento. A cláusula é clara."));
+        scene3.lines.Add(new DialogLine("Dr. Eron Dust", "Até você pagar, sua esposa é propriedade da Faithlab Medical Corporation."));
+        scene3.lines.Add(new DialogLine("Andrew", "Seu cretino! Ela é uma pessoa!"));
+
+        var scene4 = new DialogScene("scene04");
+        scene4.lines.Add(new DialogLine("Andrew", "O que fazer agora? Desistir?"));
+        scene4.lines.Add(new DialogLine("Andrew", "Merda! Me sinto tão impotente quanto uma criança."));
+        scene4.lines.Add(new DialogLine("????", "Andrew..."));
+        scene4.lines.Add(new DialogLine("", "..."));
 
 
         scenes.Add(scene1);
         scenes.Add(scene2);
+        scenes.Add(scene3);
+        scenes.Add(scene4);
     }
 
     void Start()
@@ -108,8 +119,7 @@ public class Cutscenes : MonoBehaviour
             for (int i = 0; i < cutScenesList.Count; i++)
                 cutScenesList[i].SetActive(i == currentSceneIndex);
 
-            currentLineIndex = 0;
-            ShowCurrentLine();
+            SetCurrentScene(0);
         }
     }
 
@@ -171,6 +181,12 @@ public class Cutscenes : MonoBehaviour
             return;
         }
 
+        if (currentSceneIndex < cutScenesList.Count && cutScenesList[currentSceneIndex] != null)
+        {
+            var controller = cutScenesList[currentSceneIndex].GetComponent<CutsceneController>();
+            controller?.OnLoadCutscene();
+        }
+
         currentSceneIndex = index;
         currentLineIndex = 0;
         ShowCurrentLine();
@@ -198,11 +214,19 @@ public class Cutscenes : MonoBehaviour
         {
             currentLineIndex++;
             ShowCurrentLine();
-            cutScenesList[currentSceneIndex].GetComponent<CutsceneController>()?.OnChangeDialogLine(currentLineIndex);
+            if (currentSceneIndex < cutScenesList.Count && cutScenesList[currentSceneIndex] != null)
+            {
+                var controller = cutScenesList[currentSceneIndex].GetComponent<CutsceneController>();
+                controller?.OnChangeDiaNextLine(currentLineIndex);
+            }
         }
         else
         {
-            cutScenesList[currentSceneIndex].GetComponent<CutsceneController>()?.OnClosingCutscene();
+            if (currentSceneIndex < cutScenesList.Count && cutScenesList[currentSceneIndex] != null)
+            {
+                var controller = cutScenesList[currentSceneIndex].GetComponent<CutsceneController>();
+                controller?.OnClosingCutscene();
+            }
             Debug.Log("Fim do diálogo.");
             // Aqui você pode desativar o painel, ativar botão, chamar evento, etc.
         }

@@ -9,11 +9,17 @@ public class Cutscene02 : CutsceneController
 {
     public override void OnLoadCutscene()
     {
+        AudioSource music = GameObject.Find("Tension01")?.GetComponent<AudioSource>();
+        if (music != null && !music.isPlaying)
+        {
+            music.volume = RaceManager.Instance.musicVolume;
+            music.Play();
+        }
         Debug.Log("Cena 02 carregada, tocando animação...");
         // StartCoroutine, animador, etc.
     }
 
-    public override void OnChangeDialogLine(int index)
+    public override void OnChangeDiaNextLine(int index)
     {
         Debug.Log("Mudando linha de diálogo para: " + index);
         // Aqui você pode ativar/desativar poses ou animações específicas
@@ -22,7 +28,7 @@ public class Cutscene02 : CutsceneController
     }
     public override void OnClosingCutscene()
     {
-        SceneManager.LoadScene("Race01"); // Carrega a cena da corrida
+        Cutscenes.Instance.SetCurrentScene(2);
     }
 }
 
