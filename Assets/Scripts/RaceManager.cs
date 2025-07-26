@@ -20,6 +20,7 @@ public class RaceManager : MonoBehaviour
     public float countdown = 5f;
     public bool countdownRunning = false;
     public bool win = false;
+    public bool tutorialMode = true;
 
     public int attempts = 1;
 
@@ -42,6 +43,8 @@ public class RaceManager : MonoBehaviour
     public GameObject upgradeScreen;
     private bool openedUpgradeScreen = false;
 
+    public GameObject pauseMenu;
+
     [Header("Sons")]
     public GameObject[] songs;
     public int selectedSongIndex = 0;
@@ -49,6 +52,8 @@ public class RaceManager : MonoBehaviour
 
     public AudioSource countdownAudioSource;
     public AudioSource goAudioSource;
+
+
 
 
     void Awake()
@@ -92,6 +97,12 @@ public class RaceManager : MonoBehaviour
 
         if (scene.name == "Race01")
         {
+
+            pauseMenu = GameObject.Find("PauseMenu");
+            if (tutorialMode)
+            {
+                PauseGame(true);
+            }
             countdownAudioSource = GameObject.Find("CountdownSound")?.GetComponent<AudioSource>();
             if (countdownAudioSource != null)
             {
@@ -219,7 +230,7 @@ public class RaceManager : MonoBehaviour
         }
     }
 
-    void PauseGame(bool pause)
+    public void PauseGame(bool pause)
     {
         AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
         if (pause)
@@ -291,14 +302,16 @@ public class RaceManager : MonoBehaviour
             PauseGame(gameStopped);
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            openedUpgradeScreen = !openedUpgradeScreen;
-            if (openedUpgradeScreen)
-                ShowUpgradeScreen();
-            else
-                HideUpgradeScreen();
-        }
+        // if (Input.GetKeyDown(KeyCode.U))
+        // {
+        //     openedUpgradeScreen = !openedUpgradeScreen;
+        //     if (openedUpgradeScreen)
+        //         ShowUpgradeScreen();
+        //     else
+        //         HideUpgradeScreen();
+        // }
+
+
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -311,10 +324,13 @@ public class RaceManager : MonoBehaviour
             PlayCurrentSong();
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            ResetRace();
-        }
+        // if (Input.GetKeyDown(KeyCode.Backspace))
+        // {
+        //     ResetRace();
+        // }
+
+        if (gameStopped) pauseMenu.SetActive(true);
+        else pauseMenu.SetActive(false);
 
         if (gameStopped) return;
 
@@ -395,6 +411,7 @@ public class RaceManager : MonoBehaviour
 
     public void ResetRace()
     {
+        tutorialMode = false;
         countdownRunning = false;
         distanceTraveled = 0f;
         startedRace = false;

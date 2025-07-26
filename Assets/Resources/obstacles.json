@@ -2,9 +2,9 @@
   {
     "distance": 80,
     "y": 0,
-    "prefab": "Robot",
+    "prefab": "DroneNitro",
     "data": {
-      "baseSpeed": 4
+      "baseSpeed": 0
     }
   },
   {
@@ -56,11 +56,11 @@
     }
   },
   {
-    "distance": 640,
-    "y": 4,
+    "distance": "DroneNitro",
+    "y": 0,
     "prefab": "Robot",
     "data": {
-      "baseSpeed": 5
+      "baseSpeed": 0
     }
   },
   {
@@ -81,7 +81,7 @@
   },
   {
     "distance": 880,
-    "y": -5,
+    "y": -3,
     "prefab": "Cone",
     "data": {
       "baseSpeed": -3
@@ -241,8 +241,8 @@
   },
   {
     "distance": 2480,
-    "y": 2,
-    "prefab": "Cone",
+    "y": 0,
+    "prefab": "DronePulse",
     "data": {
       "baseSpeed": -1
     }
@@ -265,7 +265,7 @@
   },
   {
     "distance": 2720,
-    "y": -5,
+    "y": -3,
     "prefab": "Cone",
     "data": {
       "baseSpeed": -2
@@ -369,7 +369,7 @@
   },
   {
     "distance": 3760,
-    "y": -5,
+    "y": -3,
     "prefab": "Robot",
     "data": {
       "baseSpeed": -1
@@ -394,9 +394,9 @@
   {
     "distance": 4000,
     "y": 1,
-    "prefab": "Moto",
+    "prefab": "DroneNitro",
     "data": {
-      "baseSpeed": -1
+      "baseSpeed": 0
     }
   },
   {
