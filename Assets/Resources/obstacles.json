@@ -186,7 +186,7 @@
   {
     "distance": 1920,
     "y": 0,
-    "prefab": "Moto",
+    "prefab": "Moto01",
     "data": {
       "baseSpeed": -3
     }
@@ -258,7 +258,7 @@
   {
     "distance": 2640,
     "y": 1,
-    "prefab": "Moto",
+    "prefab": "Moto02",
     "data": {
       "baseSpeed": 1
     }
