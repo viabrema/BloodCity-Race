@@ -164,6 +164,8 @@ public class PlayerController : MonoBehaviour
 
         foreach (GameObject obj in obstacles)
         {
+            Obstacle obstacle = obj.GetComponent<Obstacle>();
+            if (obstacle == null || obstacle.isSolid) continue;
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
