@@ -175,18 +175,43 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Colisão com objeto 123: " + collision.gameObject.name);
-        if (collision.gameObject.CompareTag("Obstacle"))
+        if (!collision.gameObject.CompareTag("Obstacle")) return;
+
+        Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
+        if (obstacle == null || !obstacle.isSolid) return;
+
+        // Ponto mais próximo do obstáculo em relação ao jogador
+        Vector2 contactPoint = collision.ClosestPoint(transform.position);
+        Vector2 direction = contactPoint - (Vector2)transform.position;
+
+        if (Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
         {
-            Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
-            if (obstacle != null && obstacle.isSolid)
+            // Colisão vertical
+            if (direction.y > 0 && verticalVelocity > 0)
             {
-                Debug.Log("Colisão com obstáculo sólido 123: " + obstacle.name);
-                // Se o obstáculo é sólido, impede a movimentação do jogador
-                RaceManager.Instance.currentSpeed = 0f;
+                // Tentando subir contra algo acima
+                verticalVelocity *= -2;
+                Debug.Log("Impedido de subir por obstáculo acima");
             }
+            else if (direction.y < 0 && verticalVelocity < 0)
+            {
+                // Tentando descer contra algo abaixo
+                verticalVelocity *= -2;
+                Debug.Log("Impedido de descer por obstáculo abaixo");
+            }
+
+            // Reduz só um pouco a velocidade horizontal
+            RaceManager.Instance.currentSpeed *= 1f;
+        }
+        else
+        {
+            // Colisão horizontal — bloqueia completamente o avanço
+            RaceManager.Instance.currentSpeed = 0f;
+            Debug.Log("Colisão frontal — velocidade zerada");
         }
     }
+
+
 
     IEnumerator ActivateNitro()
     {

@@ -73,7 +73,10 @@ public class Obstacle : MonoBehaviour
 
                 if (isSolid)
                 {
-                    oponent.currentSpeed = oponent.maxSpeed * 0.5f;
+                    if (oponent.maxSpeed * 0.5f > oponent.currentSpeed)
+                        oponent.currentSpeed *= 0.5f;
+                    else
+                        oponent.currentSpeed = oponent.maxSpeed * 0.5f;
                     return;
                 }
 
