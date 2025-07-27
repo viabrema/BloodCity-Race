@@ -7,6 +7,8 @@ public class Obstacle : MonoBehaviour
     public bool isStatic = false;
     public float baseSpeed = 1f;
 
+    public bool isSolid = false;
+
     [Header("Penalidade ao Jogador")]
     public float hitPenalty = 10f;
     public GameObject sparkEffectPrefab;
@@ -14,6 +16,8 @@ public class Obstacle : MonoBehaviour
 
     [Header("Impacto no Oponente")]
     public float oponentSlowDownFactor = 0.5f;
+
+    public int direction = 0; //1 para baixo, -1 para cima, 0 para sem direção
 
     private SpriteRenderer spriteRenderer;
 
@@ -65,6 +69,14 @@ public class Obstacle : MonoBehaviour
             Oponent oponent = other.GetComponent<Oponent>();
             if (oponent != null)
             {
+
+
+                if (isSolid)
+                {
+                    oponent.currentSpeed = oponent.maxSpeed * 0.5f;
+                    return;
+                }
+
                 float direction = (transform.position.y > other.transform.position.y) ? -1f : 1f;
                 oponent.SetSlowedByObstacle(true, direction, this.GetComponent<Collider2D>());
 
@@ -95,14 +107,11 @@ public class Obstacle : MonoBehaviour
         PlayCollisionEffects();
         RaceManager.Instance.currentSpeed -= hitPenalty;
         RaceManager.Instance.currentSpeed = Mathf.Max(RaceManager.Instance.currentSpeed, 10f);
-
-        Debug.Log("Player bateu em obstáculo!");
     }
 
     private void HandleOponentCollision()
     {
         PlayCollisionEffects(false);
-        Debug.Log("Oponente colidiu com obstáculo!");
     }
 
     private void PlayCollisionEffects(bool shake = true)

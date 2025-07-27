@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class PlayerController : MonoBehaviour
 {
@@ -168,6 +169,21 @@ public class PlayerController : MonoBehaviour
             {
                 rb.bodyType = RigidbodyType2D.Dynamic;
                 rb.gravityScale = 1.5f; // Ajuste conforme o quanto você quer que eles "caiam"
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log("Colisão com objeto 123: " + collision.gameObject.name);
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Obstacle obstacle = collision.gameObject.GetComponent<Obstacle>();
+            if (obstacle != null && obstacle.isSolid)
+            {
+                Debug.Log("Colisão com obstáculo sólido 123: " + obstacle.name);
+                // Se o obstáculo é sólido, impede a movimentação do jogador
+                RaceManager.Instance.currentSpeed = 0f;
             }
         }
     }

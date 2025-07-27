@@ -480,7 +480,7 @@
     }
   },
   {
-    "distance": 4880,
+    "distance": 4820,
     "y": -3,
     "prefab": "Robot",
     "data": {
@@ -488,19 +488,11 @@
     }
   },
   {
-    "distance": 4960,
-    "y": 2,
-    "prefab": "Cone",
+    "distance": 4900,
+    "y": 0,
+    "prefab": "Finish",
     "data": {
       "baseSpeed": 0
-    }
-  },
-  {
-    "distance": 5040,
-    "y": -2,
-    "prefab": "Robot",
-    "data": {
-      "baseSpeed": 3
     }
   }
 ]
